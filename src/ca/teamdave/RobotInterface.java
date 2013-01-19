@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.Victor;
  * @author leigh-pauls
  */
 public class RobotInterface {
-    public Victor drive_left;
-    public Victor drive_right;
-    public Joystick driver;
+    private Victor drive_left;
+    private Victor drive_right;
+    private Joystick driver;
    
     public RobotInterface() {
         
@@ -27,7 +27,6 @@ public class RobotInterface {
     }
     
     public void setDrive(double x, double y) {
-
         double left = y + x;
         double right = -y + x;
         
@@ -36,13 +35,11 @@ public class RobotInterface {
     }  
     
     public double getDriverX() {
-        double driverX = driver.getX(GenericHID.Hand.kLeft);
-        return driverX;
+        return driver.getX(GenericHID.Hand.kLeft);
     }
 
     public double getDriverY() {
-        double driverY = -driver.getY(GenericHID.Hand.kRight);
-        return driverY;
+        return -driver.getY(GenericHID.Hand.kLeft);
     }
     
 }
