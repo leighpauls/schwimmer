@@ -33,7 +33,9 @@ public class Schwimmer extends IterativeRobot {
      */
     public void robotInit() {
         robot = new RobotInterface();
+        robot.reinit();
         auto = new AutoController();
+        
     }
 
     public void autonomousInit() {
@@ -58,8 +60,6 @@ public class Schwimmer extends IterativeRobot {
         
         
     }
-    
-  
     
     /**
      * This function is called periodically during test mode

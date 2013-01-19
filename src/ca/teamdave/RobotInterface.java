@@ -5,8 +5,9 @@
 package ca.teamdave;
 
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Victor;
 
@@ -15,23 +16,44 @@ import edu.wpi.first.wpilibj.Victor;
  * @author leigh-pauls
  */
 public class RobotInterface {
-    private Victor drive_left;
-    private Victor drive_right;
+    // Robot actuators
+    private Victor driveLeft;
+    private Victor driveRight;
+    
+    // Robot sensors
+    private Encoder leftEncoder;
+    private Encoder rightEncoder;
+    private Gyro gyro;
+    
+    // human input
     private Joystick driver;
    
     public RobotInterface() {
+        driveLeft = new Victor(1);
+        driveRight = new Victor(3);
         
-        drive_left = new Victor(1);
-        drive_right = new Victor(3);
+        leftEncoder = new Encoder(1, 2);
+        rightEncoder = new Encoder(3, 4);
+        
+        gyro = new Gyro(1);
+        gyro.setSensitivity(0.0125);
+        
         driver = new Joystick(1);
+    }
+
+    public void reinit() {
+        leftEncoder.reset();
+        rightEncoder.reset();
+        
+        gyro.reset();
     }
     
     public void setDrive(double x, double y) {
         double left = y + x;
         double right = -y + x;
         
-        drive_left.set(left);
-        drive_right.set(right);
+        driveLeft.set(left);
+        driveRight.set(right);
     }  
     
     public double getDriverX() {

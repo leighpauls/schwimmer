@@ -17,11 +17,13 @@ public class HighStaticPWD {
     private boolean firstCycle;
     private double lastPosition;
     private int errorCount;
+    private boolean done;
     
     public HighStaticPWD(double p, double w, double d,
             double acceptableError) {
         setControlConstants(p, w, d, acceptableError);
-        
+
+        done = false;
         setPoint = 0.0;
         lastPosition = 0.0;
     }
@@ -64,6 +66,12 @@ public class HighStaticPWD {
         
         output -= d * change;
 
+        done = Math.abs(error) < acceptableError;
+        
         return output;
+    }
+    
+    boolean isDone() {
+        return done;
     }
 }
