@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.Victor;
  */
 public class Schwimmer extends IterativeRobot {
     RobotInterface robot;
+    AutoController auto;
     
    
     // Move this stuff to RobotControl
@@ -32,13 +33,18 @@ public class Schwimmer extends IterativeRobot {
      */
     public void robotInit() {
         robot = new RobotInterface();
+        auto = new AutoController();
     }
 
+    public void autonomousInit() {
+        auto.initAutoMode();
+    }
+    
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        
+        auto.runAutoStep(robot);
     }
 
     /**
