@@ -6,6 +6,7 @@ package ca.teamdave;
 
 import ca.teamdave.command.Command;
 import ca.teamdave.command.DriveForward;
+import ca.teamdave.command.DriveToDistance;
 import ca.teamdave.command.Stop;
 
 /**
@@ -22,7 +23,7 @@ public class AutoController {
         // TODO: actually select from a list of command lists
         curCommand = 0;
         commands = new Command[] {
-            new DriveForward(20),
+            new DriveToDistance(100),
             new Stop()
         };
     }

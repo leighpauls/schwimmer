@@ -25,6 +25,9 @@ public class RobotInterface {
     private Encoder rightEncoder;
     private Gyro gyro;
     
+    // TODO: find this const
+    static private final double METERS_PER_ENCODER_TICK = 1.0;
+    
     // human input
     private Joystick driver;
    
@@ -43,7 +46,10 @@ public class RobotInterface {
 
     public void reinit() {
         leftEncoder.reset();
+        leftEncoder.start();
         rightEncoder.reset();
+        rightEncoder.start();
+                
         
         gyro.reset();
     }
@@ -62,6 +68,14 @@ public class RobotInterface {
 
     public double getDriverY() {
         return -driver.getY(GenericHID.Hand.kLeft);
+    }
+    
+    public double getEncoderLeft() {
+        return -leftEncoder.get() * METERS_PER_ENCODER_TICK;
+    }
+    
+    public double getEncoderRight() {
+        return rightEncoder.get() * METERS_PER_ENCODER_TICK;
     }
     
 }
