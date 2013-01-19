@@ -21,10 +21,9 @@ import edu.wpi.first.wpilibj.Victor;
  * directory.
  */
 public class Schwimmer extends IterativeRobot {
-    private Victor drive_left;
-    private Victor drive_right;
-    private Joystick driver;
+    RobotInterface robot;
     
+   
     // Move this stuff to RobotControl
 
     /**
@@ -32,10 +31,7 @@ public class Schwimmer extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        System.out.println("hello world!");
-        drive_left = new Victor(1);
-        drive_right = new Victor(3);
-        driver = new Joystick(1);
+        robot = new RobotInterface();
     }
 
     /**
@@ -50,17 +46,14 @@ public class Schwimmer extends IterativeRobot {
      */
     public void teleopPeriodic() {
 
-        double x = driver.getX(GenericHID.Hand.kLeft);
-        double y = -driver.getY(GenericHID.Hand.kRight);
-
-        System.out.println("x: " + x + ", y: " + y);
+        robot.setDrive(robot.getDriverX(), robot.getDriverY());
         
-        double left = y + x;
-        double right = -y + x;
+        // System.out.println("x: " + x + ", y: " + y);
         
-        drive_left.set(left);
-        drive_right.set(right);
+        
     }
+    
+  
     
     /**
      * This function is called periodically during test mode
@@ -68,5 +61,7 @@ public class Schwimmer extends IterativeRobot {
     public void testPeriodic() {
     
     }
+    
+            
     
 }
