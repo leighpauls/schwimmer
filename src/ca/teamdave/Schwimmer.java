@@ -39,6 +39,7 @@ public class Schwimmer extends IterativeRobot {
     }
 
     public void autonomousInit() {
+        robot.reinit();
         auto.initAutoMode();
     }
     

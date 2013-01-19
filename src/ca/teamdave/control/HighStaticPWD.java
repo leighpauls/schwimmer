@@ -71,7 +71,7 @@ public class HighStaticPWD {
         return output;
     }
     
-    boolean isDone() {
+    public boolean isDone() {
         return done;
     }
 }
