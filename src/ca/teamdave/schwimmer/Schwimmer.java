@@ -8,10 +8,9 @@
 package ca.teamdave.schwimmer;
 
 
-import edu.wpi.first.wpilibj.GenericHID;
+import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
+import ca.teamdave.schwimmer.automodes.AutoModeSelector;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Victor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,38 +20,55 @@ import edu.wpi.first.wpilibj.Victor;
  * directory.
  */
 public class Schwimmer extends IterativeRobot {
-    RobotInterface robot;
-    AutoController auto;
+    RobotInterface mRobot;
+    AutoController mAuto;
+    
+    AutoModeDescriptor mSelectedAuto;
+    private AutoModeSelector mAutoSelector;
     
    
     public void robotInit() {
-        robot = new RobotInterface();
-        auto = new AutoController();
+        mRobot = new RobotInterface();
+        mAuto = new AutoController();
+        mAutoSelector = new AutoModeSelector();
+        mSelectedAuto = mAutoSelector.getDefault();
+        System.out.println("Using default auto: " 
+                + mSelectedAuto.getVisibleName());
     }
 
     public void autonomousInit() {
-        robot.reinit();
-        auto.initAutoMode();
+        mRobot.reinit(
+                mSelectedAuto.getInitialPosition(),
+                mSelectedAuto.getInitialHeading());
+        mAuto.initAutoMode(mSelectedAuto);
     }
     public void autonomousPeriodic() {
-        robot.periodicUpdate();
-        auto.runAutoStep(robot);
+        mRobot.periodicUpdate();
+        mAuto.runAutoStep(mRobot);
     }
 
 
     public void teleopPeriodic() {
-        robot.periodicUpdate();
-        robot.setDrive(robot.getDriverX(), robot.getDriverY());
+        mRobot.periodicUpdate();
+
+        // TODO: make a real teleop class
+        mRobot.setDrive(mRobot.getDriverX(), mRobot.getDriverY());
     }
 
     
     public void testPeriodic() {
-        robot.periodicUpdate();
+        mRobot.periodicUpdate();
         
     }
     
             
     public void disabledPeriodic() {
-        robot.periodicUpdate();
+        mRobot.periodicUpdate();
+        
+        if (mRobot.isAutonSelectButton()) {
+            mSelectedAuto = mAutoSelector.selectFromAnalogRange(
+                    mRobot.getDriverY());
+            System.out.println("Selected: " + mSelectedAuto.getVisibleName());
+        }
     }
 }

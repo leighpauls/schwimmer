@@ -34,6 +34,7 @@ public class RobotInterface {
     private double mLastEncoderAverage;
     private DaveVector mPos;
     private double mHeading;
+    private double mGyroOffset;
 
    
     public RobotInterface() {
@@ -51,8 +52,13 @@ public class RobotInterface {
         reinit();
     }
 
+    
     final public void reinit() {
-        mPos = DaveVector.fromXY(0.0, 0.0);
+        reinit(DaveVector.fromXY(0, 0), 0.0);
+    }
+    
+    final public void reinit(DaveVector newPosition, double newHeading) {
+        mPos = newPosition;
         mLastEncoderAverage = 0.0;
         mLeftEncoder.reset();
         mLeftEncoder.start();
@@ -60,7 +66,8 @@ public class RobotInterface {
         mRightEncoder.start();
         
         mGyro.reset();
-        mHeading = 0.0;
+        mGyroOffset = newHeading;
+        mHeading = newHeading;
     }
     
     public void periodicUpdate() {
@@ -68,7 +75,7 @@ public class RobotInterface {
         double distTraveled = curEncoderAverage - mLastEncoderAverage;
         mLastEncoderAverage = curEncoderAverage;
         
-        mHeading = mGyro.getAngle();
+        mHeading = mGyroOffset + mGyro.getAngle();
         
         mPos.moveFieldRadial(distTraveled, mHeading);
     }
@@ -105,4 +112,7 @@ public class RobotInterface {
         return mHeading;
     }
     
+    public boolean isAutonSelectButton() {
+        return mDriver.getRawButton(1);
+    }
 }

@@ -4,6 +4,7 @@
  */
 package ca.teamdave.schwimmer;
 
+import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.command.drive.DriveForward;
 import ca.teamdave.schwimmer.command.drive.DriveToDistance;
@@ -15,23 +16,27 @@ import ca.teamdave.schwimmer.command.Stop;
  */
 public class AutoController {
     
-    private Command commands[];
+    private Stop mSafetyStop = new Stop();
+    private Command mTopLevelCommand;
+    private boolean mDone;
     
-    private int curCommand;
-    
-    public void initAutoMode() {
-        // TODO: actually select from a list of command lists
-        curCommand = 0;
-        commands = new Command[] {
-            new DriveToDistance(100),
-            new Stop()
-        };
+    public void initAutoMode(AutoModeDescriptor descriptor) {
+        mTopLevelCommand = descriptor.getTopLevelCommand();
+        mDone = false;
     }
     
     public void runAutoStep(RobotInterface robot) {
-        commands[curCommand].runCommandStep(robot);
-        if (commands[curCommand].isDone()) {
-            curCommand++;
+        // make sure I don't crap out if a list ends
+        if (mDone) {
+            mSafetyStop.runCommandStep(robot);
+            return;
         }
+        
+        mTopLevelCommand.runCommandStep(robot);
+        // totoally stop running on the first "done" signal
+        if (mTopLevelCommand.isDone()) {
+            mDone = true;
+        }
+
     }
 }

@@ -7,7 +7,7 @@ package ca.teamdave.schwimmer.command;
 import ca.teamdave.schwimmer.RobotInterface;
 
 /**
- *
+ * Stops everything
  * @author leighpauls
  */
 public class Stop implements Command {
