@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package ca.teamdave;
+package ca.teamdave.schwimmer;
 
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -25,50 +25,34 @@ public class Schwimmer extends IterativeRobot {
     AutoController auto;
     
    
-    // Move this stuff to RobotControl
-
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
     public void robotInit() {
         robot = new RobotInterface();
-        robot.reinit();
         auto = new AutoController();
-        
     }
 
     public void autonomousInit() {
         robot.reinit();
         auto.initAutoMode();
     }
-    
-    /**
-     * This function is called periodically during autonomous
-     */
     public void autonomousPeriodic() {
+        robot.periodicUpdate();
         auto.runAutoStep(robot);
     }
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
 
+    public void teleopPeriodic() {
+        robot.periodicUpdate();
         robot.setDrive(robot.getDriverX(), robot.getDriverY());
-        
-        // System.out.println("x: " + x + ", y: " + y);
-        
-        
     }
+
     
-    /**
-     * This function is called periodically during test mode
-     */
     public void testPeriodic() {
-    
+        robot.periodicUpdate();
+        
     }
     
             
-    
+    public void disabledPeriodic() {
+        robot.periodicUpdate();
+    }
 }

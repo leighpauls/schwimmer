@@ -2,10 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.teamdave.command;
+package ca.teamdave.schwimmer.command.drive;
 
-import ca.teamdave.RobotInterface;
-import ca.teamdave.control.HighStaticPWD;
+import ca.teamdave.schwimmer.util.DaveUtil;
+import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.command.Command;
+import ca.teamdave.schwimmer.control.HighStaticPWD;
 
 /**
  *
@@ -13,16 +15,26 @@ import ca.teamdave.control.HighStaticPWD;
  */
 public class DriveToDistance implements Command {
     private final HighStaticPWD control;
+    private final double maxPower;
 
     public DriveToDistance(double dist) {
+        this(dist, 1.0);
+    }
+    public DriveToDistance(double dist, double maxPower) {
         control = new HighStaticPWD(0.01, 0, 0, 0.05);
         control.setSetPoint(dist);
+        this.maxPower = Math.abs(maxPower);
     }
     
     public void runCommandStep(RobotInterface robot) {
         double position = (robot.getEncoderLeft() + robot.getEncoderRight()) / 2.0;
         double output = control.computeCycle(position);
         System.out.println(position);
+        
+        if (Math.abs(output) > maxPower) {
+            output = maxPower * DaveUtil.sign(output);
+        }
+        
         robot.setDrive(0, output);
     }
 

@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.teamdave;
+package ca.teamdave.schwimmer;
 
-import ca.teamdave.command.Command;
-import ca.teamdave.command.DriveForward;
-import ca.teamdave.command.DriveToDistance;
-import ca.teamdave.command.Stop;
+import ca.teamdave.schwimmer.command.Command;
+import ca.teamdave.schwimmer.command.drive.DriveForward;
+import ca.teamdave.schwimmer.command.drive.DriveToDistance;
+import ca.teamdave.schwimmer.command.Stop;
 
 /**
  *
