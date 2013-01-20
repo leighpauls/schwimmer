@@ -68,7 +68,6 @@ public class Schwimmer extends IterativeRobot {
         if (mRobot.isAutonSelectButton()) {
             mSelectedAuto = mAutoSelector.selectFromAnalogRange(
                     mRobot.getDriverY());
-            System.out.println("Selected: " + mSelectedAuto.getVisibleName());
         }
     }
 }

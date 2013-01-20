@@ -76,7 +76,7 @@ public class RobotInterface {
         double distTraveled = curEncoderAverage - mLastEncoderAverage;
         mLastEncoderAverage = curEncoderAverage;
         
-        mHeading = mGyroOffset + mGyro.getAngle();
+        mHeading = mGyroOffset - mGyro.getAngle();
         
         mPos.moveFieldRadial(distTraveled, mHeading);
         
@@ -96,7 +96,7 @@ public class RobotInterface {
         DriverStationLCD.getInstance().println(
                 DriverStationLCD.Line.kUser5, 
                 1, 
-                "Auto: " + autoName + "     ");
+                "Auto: " + autoName + "               ");
         DriverStationLCD.getInstance().updateLCD();
     }
     

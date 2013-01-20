@@ -30,7 +30,7 @@ public class AutoModeSelector {
     
     public AutoModeDescriptor selectFromAnalogRange(double analogInput) {
         int idx = (int)Math.floor(Math.abs(
-                (analogInput / 2.0 + 1.0) * mModeList.length));
+                (analogInput / 2.0 + 0.5) * mModeList.length));
         if (idx >= mModeList.length) {
             idx = mModeList.length - 1;
         }

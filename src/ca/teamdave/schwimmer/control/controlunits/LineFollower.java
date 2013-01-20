@@ -47,18 +47,23 @@ public class LineFollower {
     
     private double getDesiredAngle(DaveVector curPosition) {
         // find the distance from here to the line
-        double distToLine = curPosition.distanceToLine(
+        double distToLine = curPosition.directionalDistanceToLine(
                 mLineOrigin, mLineDirection);
         double turnHardness = distToLine * 45;
         turnHardness = Math.min(90.0, Math.max(-90, turnHardness));
-        return mLineDirection.getFieldAngle() - turnHardness;
+        
+        double res = mLineDirection.getFieldAngle() - turnHardness;
+        
+        System.out.println(distToLine + " away, turn to " + res);
+
+        return res;
     }
 
     private boolean hasTraveledDistance(DaveVector curPosition) {
         // check if I've crossed the line
         DaveVector startLine = DaveVector.fromFieldRadial(
                 1.0, mLineDirection.getFieldAngle() + 90.0);
-        if (curPosition.distanceToLine(mLineOrigin, startLine) 
+        if (curPosition.directionalDistanceToLine(mLineOrigin, startLine) 
                 >= mTravelDisance) {
             return true;
         }

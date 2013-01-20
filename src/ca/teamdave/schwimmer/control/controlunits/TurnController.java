@@ -17,7 +17,7 @@ public class TurnController {
     
     
     public TurnController(double forwardPower) {
-        mController = new HighStaticPWD(0.01, 0, 0, 2.0);
+        mController = new HighStaticPWD(0.08, 0.01, 0, 2.0);
         mForwardPower = forwardPower;
     }
     
@@ -31,7 +31,7 @@ public class TurnController {
      * @return true iff the control loop is done
      */
     public boolean doCycle(RobotInterface robot) {
-        robot.setDrive(mController.computeCycle(robot.getHeading()), mForwardPower);
+        robot.setDrive(-mController.computeCycle(robot.getHeading()), mForwardPower);
         return mController.isDone();
     }
 
