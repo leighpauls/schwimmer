@@ -43,13 +43,13 @@ public class Schwimmer extends IterativeRobot {
         mAuto.initAutoMode(mSelectedAuto);
     }
     public void autonomousPeriodic() {
-        mRobot.periodicUpdate();
+        mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         mAuto.runAutoStep(mRobot);
     }
 
 
     public void teleopPeriodic() {
-        mRobot.periodicUpdate();
+        mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
 
         // TODO: make a real teleop class
         mRobot.setDrive(mRobot.getDriverX(), mRobot.getDriverY());
@@ -57,13 +57,13 @@ public class Schwimmer extends IterativeRobot {
 
     
     public void testPeriodic() {
-        mRobot.periodicUpdate();
+        mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         
     }
     
             
     public void disabledPeriodic() {
-        mRobot.periodicUpdate();
+        mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         
         if (mRobot.isAutonSelectButton()) {
             mSelectedAuto = mAutoSelector.selectFromAnalogRange(

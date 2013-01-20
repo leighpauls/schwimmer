@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer;
 
 
 import ca.teamdave.schwimmer.util.DaveVector;
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Gyro;
@@ -27,7 +28,7 @@ public class RobotInterface {
     private Gyro mGyro;
     
     // TODO: find this const
-    static private final double K_METERS_PER_ENCODER_TICK = 1.0;
+    static private final double K_METERS_PER_ENCODER_TICK = 1.0 / 791.5;
     
     // human input
     private Joystick mDriver;
@@ -45,7 +46,7 @@ public class RobotInterface {
         mRightEncoder = new Encoder(3, 4);
         
         mGyro = new Gyro(1);
-        mGyro.setSensitivity(0.0125);
+        mGyro.setSensitivity(0.0125 * 200.0 / 360.0);
         
         mDriver = new Joystick(1);
         
@@ -70,7 +71,7 @@ public class RobotInterface {
         mHeading = newHeading;
     }
     
-    public void periodicUpdate() {
+    public void periodicUpdate(String autoName) {
         double curEncoderAverage = (getEncoderLeft() + getEncoderRight()) / 2.0;
         double distTraveled = curEncoderAverage - mLastEncoderAverage;
         mLastEncoderAverage = curEncoderAverage;
@@ -78,6 +79,25 @@ public class RobotInterface {
         mHeading = mGyroOffset + mGyro.getAngle();
         
         mPos.moveFieldRadial(distTraveled, mHeading);
+        
+        
+        DriverStationLCD.getInstance().println(
+                DriverStationLCD.Line.kUser2,
+                1,
+                "L: " + getEncoderLeft() + "       ");
+        DriverStationLCD.getInstance().println(
+                DriverStationLCD.Line.kUser3,
+                1, 
+                "R: " + getEncoderRight() + "    ");
+        DriverStationLCD.getInstance().println(
+                DriverStationLCD.Line.kUser4,
+                1, 
+                "Gyro: " + mHeading + "      ");
+        DriverStationLCD.getInstance().println(
+                DriverStationLCD.Line.kUser5, 
+                1, 
+                "Auto: " + autoName + "     ");
+        DriverStationLCD.getInstance().updateLCD();
     }
     
     public DaveVector getPosition() {
