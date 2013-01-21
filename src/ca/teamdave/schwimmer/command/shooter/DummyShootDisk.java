@@ -13,7 +13,7 @@ import ca.teamdave.schwimmer.command.Command;
  */
 public class DummyShootDisk implements Command{
     
-    private int mTicksLeft = 25;
+    private int mTicksLeft = 400 / 20;
     private boolean mFirstCycle = true;
     
     public void runCommandStep(RobotInterface robot) {

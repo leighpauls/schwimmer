@@ -5,7 +5,9 @@
 package ca.teamdave.schwimmer;
 
 
+import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
+import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -82,21 +84,27 @@ public class RobotInterface {
         
         
         DriverStationLCD.getInstance().println(
+                DriverStationLCD.Line.kUser1, 
+                1, 
+                "X: " + DaveUtil.toAccuracy(mPos.getX(), 3)
+                + " Y: " + DaveUtil.toAccuracy(mPos.getY(), 3));
+        DriverStationLCD.getInstance().println(
                 DriverStationLCD.Line.kUser2,
                 1,
-                "L: " + getEncoderLeft() + "       ");
+                "L: " + DaveUtil.toAccuracy(getEncoderLeft(), 3) + "       ");
         DriverStationLCD.getInstance().println(
                 DriverStationLCD.Line.kUser3,
                 1, 
-                "R: " + getEncoderRight() + "    ");
+                "R: " + DaveUtil.toAccuracy(getEncoderRight(), 3) + "    ");
         DriverStationLCD.getInstance().println(
                 DriverStationLCD.Line.kUser4,
                 1, 
-                "Gyro: " + mHeading + "      ");
+                "Gyro: " + DaveUtil.toAccuracy(mHeading, 3) + "      ");
         DriverStationLCD.getInstance().println(
                 DriverStationLCD.Line.kUser5, 
                 1, 
                 "Auto: " + autoName + "               ");
+        
         DriverStationLCD.getInstance().updateLCD();
     }
     

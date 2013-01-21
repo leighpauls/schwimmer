@@ -25,6 +25,7 @@ public class Schwimmer extends IterativeRobot {
     
     AutoModeDescriptor mSelectedAuto;
     private AutoModeSelector mAutoSelector;
+    private long mLastTime = 0;
     
    
     public void robotInit() {
@@ -60,6 +61,8 @@ public class Schwimmer extends IterativeRobot {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         
     }
+    
+    
     
             
     public void disabledPeriodic() {

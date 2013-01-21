@@ -26,8 +26,10 @@ public class Dummy7Disk extends AutoModeDescriptor {
     }
 
     public Command getTopLevelCommand() {
-        double farDiskDist = 4.0;
-        double closeDiskDist = 2.0;
+        double farDiskDist = 3.5;
+        double closeDiskDist = 1.2;
+        double sidePathDist = 1.5;
+        double straightPower = 1.0;
 
         // TODO: Put the flywheel on and keep it on
 
@@ -36,7 +38,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
                 DaveVector.fromXY(0, 0),
                 DaveVector.fromXY(0, 1),
                 farDiskDist,
-                0.3);
+                straightPower);
         Command driveHold = new TurnToHeading(0.0);
 
         Command driveSeries = new Series(new Command[]{
@@ -65,7 +67,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
         Command secondSegment = new FollowLine(
                 DaveVector.fromXY(0, farDiskDist),
                 DaveVector.fromXY(-1.0, 0.0),
-                2.0, 0.3);
+                sidePathDist, straightPower);
         // TODO: stop pickup
 
         // Turn Left
@@ -73,10 +75,10 @@ public class Dummy7Disk extends AutoModeDescriptor {
 
         // Drive to the second row of disks
         Command thirdSegment = new FollowLine(
-                DaveVector.fromXY(-2.0, farDiskDist),
+                DaveVector.fromXY(-sidePathDist, farDiskDist),
                 DaveVector.fromXY(0, -1.0),
                 farDiskDist - closeDiskDist,
-                0.3);
+                straightPower);
 
         Command thirdLeft = new TurnToHeading(270);
 
@@ -84,7 +86,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
         Command fourthSegment = new FollowLine(
                 DaveVector.fromXY(-2, closeDiskDist),
                 DaveVector.fromXY(1.0, 0.0),
-                2.0, 0.3);
+                sidePathDist, straightPower);
 
         Command finalCorner = new TurnToHeading(360);
 
@@ -95,6 +97,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
                     new DummyShootDisk(),
                     new NoOp()
                 });
+        Command holdAim = new TurnToHeading(360);
 
         return new Series(new Command[]{
                     firstSegment,
@@ -105,7 +108,10 @@ public class Dummy7Disk extends AutoModeDescriptor {
                     thirdLeft,
                     fourthSegment,
                     finalCorner,
-                    finalShots
+                    new Latch(new Command[] {
+                        finalShots,
+                        holdAim
+                    })
                 });
 
     }
