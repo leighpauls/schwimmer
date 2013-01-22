@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.teamdave.command;
+package ca.teamdave.schwimmer.command.drive;
 
-import ca.teamdave.RobotInterface;
+import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.command.Command;
 
 /**
  *
