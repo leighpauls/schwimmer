@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.teamdave.control;
+package ca.teamdave.schwimmer.control;
 
 /**
  *
@@ -27,11 +27,16 @@ public class HighStaticPWD {
         setPoint = 0.0;
         lastPosition = 0.0;
     }
-    
+
     public void setSetPoint(double newSetPoint) {
+        setSetPoint(newSetPoint, false);
+    }
+    public void setSetPoint(double newSetPoint, boolean softReset) {
         setPoint = newSetPoint;
-        errorCount = 0;
-        firstCycle = true;
+        if (!softReset) {
+            errorCount = 0;
+            firstCycle = true;
+        }
     }
     
     public final void setControlConstants(double p, double w, double d, double acceptableErrror) {
@@ -71,7 +76,7 @@ public class HighStaticPWD {
         return output;
     }
     
-    boolean isDone() {
+    public boolean isDone() {
         return done;
     }
 }
