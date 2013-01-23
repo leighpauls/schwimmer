@@ -83,7 +83,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
 
         // TODO: pickip
         Command fourthSegment = new FollowLine(
-                DaveVector.fromXY(-2, closeDiskDist),
+                DaveVector.fromXY(-sidePathDist, closeDiskDist),
                 DaveVector.fromXY(1.0, 0.0),
                 sidePathDist, straightPower);
 
