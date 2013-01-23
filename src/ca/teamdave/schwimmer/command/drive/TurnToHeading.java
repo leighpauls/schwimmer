@@ -17,7 +17,8 @@ public class TurnToHeading implements Command {
     private boolean mIsDone;
 
     public TurnToHeading(double destHeading) {
-        mControl = new TurnController(destHeading);
+        mControl = new TurnController(0.0);
+        mControl.setDestAngle(destHeading);
         mIsDone = false;
     }
     

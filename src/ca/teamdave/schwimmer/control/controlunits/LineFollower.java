@@ -5,6 +5,7 @@
 package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
 
 /**
@@ -47,18 +48,21 @@ public class LineFollower {
     
     private double getDesiredAngle(DaveVector curPosition) {
         // find the distance from here to the line
-        double distToLine = curPosition.distanceToLine(
+        double distToLine = curPosition.directionalDistanceToLine(
                 mLineOrigin, mLineDirection);
         double turnHardness = distToLine * 45;
         turnHardness = Math.min(90.0, Math.max(-90, turnHardness));
-        return mLineDirection.getFieldAngle() - turnHardness;
+        
+        double res = mLineDirection.getFieldAngle() - turnHardness;
+        
+        return res;
     }
 
     private boolean hasTraveledDistance(DaveVector curPosition) {
         // check if I've crossed the line
         DaveVector startLine = DaveVector.fromFieldRadial(
                 1.0, mLineDirection.getFieldAngle() + 90.0);
-        if (curPosition.distanceToLine(mLineOrigin, startLine) 
+        if (Math.abs(curPosition.directionalDistanceToLine(mLineOrigin, startLine)) 
                 >= mTravelDisance) {
             return true;
         }

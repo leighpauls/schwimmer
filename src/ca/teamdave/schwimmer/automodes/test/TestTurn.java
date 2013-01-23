@@ -4,9 +4,12 @@
  */
 package ca.teamdave.schwimmer.automodes.test;
 
+import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.command.drive.TurnToHeading;
+import ca.teamdave.schwimmer.command.meta.Endless;
+import ca.teamdave.schwimmer.command.meta.Latch;
 
 /**
  *
@@ -20,7 +23,10 @@ public class TestTurn extends AutoModeDescriptor {
     }
 
     public Command getTopLevelCommand() {
-        return new TurnToHeading(90);
+        return new Latch(new Command[] {
+                new TurnToHeading(90),
+                new Endless()
+        });
     }
     
 }

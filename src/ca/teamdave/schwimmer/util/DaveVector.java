@@ -67,11 +67,12 @@ public class DaveVector {
         return Math.sqrt(mX*mX + mY*mY);
     }
     
-    public double distanceToLine(DaveVector origin, DaveVector direction) {
+    public double directionalDistanceToLine(DaveVector origin, DaveVector direction) {
         DaveVector hypotenuse = DaveVector.fromXY(
                 this.mX - origin.mX,
                 this.mY - origin.mY);
         double angle = hypotenuse.getFieldAngle() - direction.getFieldAngle();
-        return Math.abs(hypotenuse.getMagnitude() * Math.cos(angle));
+        return hypotenuse.getMagnitude() * Math.sin(angle * Math.PI / 180.0);
     }
+
 }

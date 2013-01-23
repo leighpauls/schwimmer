@@ -25,90 +25,92 @@ public class Dummy7Disk extends AutoModeDescriptor {
         return "Dummy 7 Disk";
     }
 
-    
     public Command getTopLevelCommand() {
-        double farDiskDist = 4.0;
-        double closeDiskDist = 2.0;
-        
+        double farDiskDist = 3.5;
+        double closeDiskDist = 1.2;
+        double sidePathDist = 1.0;
+        double straightPower = 1.0;
+
         // TODO: Put the flywheel on and keep it on
-        
+
         // Drive forward and fire 3 disks
         Command firstApproach = new FollowLine(
                 DaveVector.fromXY(0, 0),
                 DaveVector.fromXY(0, 1),
                 farDiskDist,
-                0.3);
+                straightPower);
         Command driveHold = new TurnToHeading(0.0);
 
-        Command driveSeries = new Series(new Command[] {
-            firstApproach,
-            driveHold
+        Command driveSeries = new Series(new Command[]{
+                    firstApproach,
+                    driveHold
+                });
+
+        Command shotSeries = new Series(new Command[]{
+                    new DummyWaitForFlyWheel(),
+                    new DummyShootDisk(),
+                    new DummyShootDisk(),
+                    new DummyShootDisk()
+                });
+
+        Command firstSegment = new Latch(new Command[]{
+            shotSeries,
+            driveSeries
         });
 
-        Command shotSeries = new Series(new Command[] {
-           new DummyWaitForFlyWheel(),
-           new DummyShootDisk(),
-           new DummyShootDisk(),
-           new DummyShootDisk(),
-           new NoOp()
-        });
-        
-        Command firstSegment = new Latch(new Command[] {
-            driveSeries,
-            shotSeries
-        });
-        
         // Turn left
         Command firstLeft = new TurnToHeading(90.0);
-        
+
         // Dive through the first 2 disks
         // TODO: pickup
         Command secondSegment = new FollowLine(
                 DaveVector.fromXY(0, farDiskDist),
                 DaveVector.fromXY(-1.0, 0.0),
-                2.0, 0.3);
+                sidePathDist, straightPower);
         // TODO: stop pickup
-        
+
         // Turn Left
         Command secondLeft = new TurnToHeading(180.0);
-        
+
         // Drive to the second row of disks
         Command thirdSegment = new FollowLine(
-                DaveVector.fromXY(-2.0, farDiskDist),
+                DaveVector.fromXY(-sidePathDist, farDiskDist),
                 DaveVector.fromXY(0, -1.0),
                 farDiskDist - closeDiskDist,
-                0.3);
-        
+                straightPower);
+
         Command thirdLeft = new TurnToHeading(270);
-        
+
         // TODO: pickip
         Command fourthSegment = new FollowLine(
                 DaveVector.fromXY(-2, closeDiskDist),
                 DaveVector.fromXY(1.0, 0.0),
-                2.0, 0.3);
-        
+                sidePathDist, straightPower);
+
         Command finalCorner = new TurnToHeading(360);
-        
-        Command finalShots = new Series(new Command[] {
-            new DummyShootDisk(),
-            new DummyShootDisk(),
-            new DummyShootDisk(),
-            new DummyShootDisk(),
-            new NoOp()
-        });
-        
-        return new Series(new Command[] {
-            firstSegment,
-            firstLeft,
-            secondSegment,
-            secondLeft,
-            thirdSegment,
-            thirdLeft,
-            fourthSegment,
-            finalCorner,
-            finalShots
-        });
-        
+
+        Command finalShots = new Series(new Command[]{
+                    new DummyShootDisk(),
+                    new DummyShootDisk(),
+                    new DummyShootDisk(),
+                    new DummyShootDisk()
+                });
+        Command holdAim = new TurnToHeading(360);
+
+        return new Series(new Command[]{
+                    firstSegment,
+                    firstLeft,
+                    secondSegment,
+                    secondLeft,
+                    thirdSegment,
+                    thirdLeft,
+                    fourthSegment,
+                    finalCorner,
+                    new Latch(new Command[] {
+                        finalShots,
+                        holdAim
+                    })
+                });
+
     }
-    
 }
