@@ -31,6 +31,9 @@ public class Latch implements Command {
                 mIsDone = false;
             }
         }
+        if (mIsDone){
+            System.out.println("Latch Done");
+        }
     }
 
     public boolean isDone() {

@@ -13,12 +13,22 @@ import ca.teamdave.schwimmer.command.Command;
  */
 public class DummyShootDisk implements Command{
     
-    private int mTicksLeft = 25;
+    private static int nextId = 0;
+    
+    private int mTicksLeft = 400 / 20;
     private boolean mFirstCycle = true;
+    private int id;
+    
+    public DummyShootDisk() {
+        id = nextId;
+        nextId++;
+        System.out.println("Made Shot: " + id);
+    }
     
     public void runCommandStep(RobotInterface robot) {
         if (mFirstCycle) {
-            System.out.println("Fire Disk");
+            System.out.println("Fire Disk: " + id);
+            System.out.flush();
             mFirstCycle = false;
         }
         if (mTicksLeft > 0) {

@@ -13,7 +13,7 @@ import ca.teamdave.schwimmer.command.Command;
  */
 public class DummyWaitForFlyWheel implements Command {
 
-    private int mTicksLeft = 200;
+    private int mTicksLeft = 2000 / 20;
     private boolean mFirstCycle = true;
     
     public void runCommandStep(RobotInterface robot) {

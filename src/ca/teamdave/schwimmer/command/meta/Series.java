@@ -30,6 +30,10 @@ public class Series implements Command {
         if (mChildren[mCurCommand].isDone()) {
             mCurCommand++;
         }
+        
+        if (mCurCommand >= mChildren.length){
+            System.out.println("Series Done");
+        }
     }
 
     public boolean isDone() {
