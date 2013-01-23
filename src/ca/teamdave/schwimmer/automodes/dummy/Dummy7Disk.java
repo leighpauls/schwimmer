@@ -28,7 +28,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
     public Command getTopLevelCommand() {
         double farDiskDist = 3.5;
         double closeDiskDist = 1.2;
-        double sidePathDist = 1.5;
+        double sidePathDist = 1.0;
         double straightPower = 1.0;
 
         // TODO: Put the flywheel on and keep it on
@@ -50,14 +50,13 @@ public class Dummy7Disk extends AutoModeDescriptor {
                     new DummyWaitForFlyWheel(),
                     new DummyShootDisk(),
                     new DummyShootDisk(),
-                    new DummyShootDisk(),
-                    new NoOp()
+                    new DummyShootDisk()
                 });
 
         Command firstSegment = new Latch(new Command[]{
-                    driveSeries,
-                    shotSeries
-                });
+            shotSeries,
+            driveSeries
+        });
 
         // Turn left
         Command firstLeft = new TurnToHeading(90.0);
@@ -94,8 +93,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
                     new DummyShootDisk(),
                     new DummyShootDisk(),
                     new DummyShootDisk(),
-                    new DummyShootDisk(),
-                    new NoOp()
+                    new DummyShootDisk()
                 });
         Command holdAim = new TurnToHeading(360);
 

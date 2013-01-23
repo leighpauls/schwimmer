@@ -56,14 +56,10 @@ public class Schwimmer extends IterativeRobot {
         mRobot.setDrive(mRobot.getDriverX(), mRobot.getDriverY());
     }
 
-    
     public void testPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         
     }
-    
-    
-    
             
     public void disabledPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
