@@ -19,7 +19,8 @@ public class TurnController {
     
     
     public TurnController(double forwardPower) {
-        mController = new HighStaticPWD(0.08, 0.01, 0.5, 2.0);
+        mController = new HighStaticPWD(0.02, 0.01, 0.1, 2.0);
+        //mController = new HighStaticPWD(0.08, 0.01, 0.5, 2.0);
         mDestAngle = 0.0;
         mForwardPower = forwardPower;
     }

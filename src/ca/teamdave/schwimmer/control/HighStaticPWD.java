@@ -15,7 +15,7 @@ public class HighStaticPWD {
     private double acceptableError;
     private double setPoint;
     private boolean firstCycle;
-    private double lastPosition;
+    private double lastError;
     private int errorCount;
     private boolean done;
     
@@ -25,7 +25,7 @@ public class HighStaticPWD {
 
         done = false;
         setPoint = 0.0;
-        lastPosition = 0.0;
+        lastError = 0.0;
     }
 
     public void setSetPoint(double newSetPoint) {
@@ -65,8 +65,8 @@ public class HighStaticPWD {
         output -= w * errorCount;
         
         // Derivitive contribution
-        double change = firstCycle ? 0.0 : (curPosition - lastPosition);
-        lastPosition = curPosition;
+        double change = firstCycle ? 0.0 : (error - lastError);
+        lastError = error;
         firstCycle = false;
         
         output -= d * change;
