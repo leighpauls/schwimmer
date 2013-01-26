@@ -28,8 +28,8 @@ public class Dummy7Disk extends AutoModeDescriptor {
     public Command getTopLevelCommand() {
         double farDiskDist = 3.5;
         double closeDiskDist = 1.2;
-        double sidePathDist = 1.0;
-        double straightPower = 1.0;
+        double sidePathDist = 1.5;
+        double straightPower = 0.5;
 
         // TODO: Put the flywheel on and keep it on
 

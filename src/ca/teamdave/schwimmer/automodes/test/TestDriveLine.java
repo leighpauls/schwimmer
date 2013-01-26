@@ -21,7 +21,7 @@ public class TestDriveLine extends AutoModeDescriptor{
     
     public Command getTopLevelCommand() {
         return new FollowLine(
-                DaveVector.fromXY(0.5, 0),
+                DaveVector.fromXY(1.5, 0),
                 DaveVector.fromXY(0, 1),
                 10.0,
                 1.0);
