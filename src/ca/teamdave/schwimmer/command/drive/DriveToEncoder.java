@@ -6,29 +6,28 @@ package ca.teamdave.schwimmer.command.drive;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.command.Command;
-import ca.teamdave.schwimmer.control.controlunits.TurnController;
+import ca.teamdave.schwimmer.control.controlunits.DriveController;
 
 /**
  *
  * @author leighpauls
  */
-public class TurnToHeading implements Command {
-    private final TurnController mControl;
+public class DriveToEncoder implements Command {
+    private final DriveController mDriveController;
     private boolean mIsDone;
 
-    public TurnToHeading(double destHeading) {
-        mControl = new TurnController();
-        mControl.setDestAngle(destHeading);
+    public DriveToEncoder(double encoderPos) {
+        mDriveController = new DriveController();
+        mDriveController.setControlDestination(encoderPos, 0.0);
         mIsDone = false;
     }
     
     public void runCommandStep(RobotInterface robot) {
-        mIsDone = mControl.doCycle(robot);
+        mIsDone = mDriveController.doCycle(robot);
     }
 
     public boolean isDone() {
         return mIsDone;
     }
-    
     
 }

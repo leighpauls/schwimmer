@@ -74,7 +74,7 @@ public class RobotInterface {
     }
     
     public void periodicUpdate(String autoName) {
-        double curEncoderAverage = (getEncoderLeft() + getEncoderRight()) / 2.0;
+        double curEncoderAverage = getEncoderAverage();
         double distTraveled = curEncoderAverage - mLastEncoderAverage;
         mLastEncoderAverage = curEncoderAverage;
         
@@ -126,6 +126,10 @@ public class RobotInterface {
 
     public double getDriverY() {
         return -mDriver.getY(GenericHID.Hand.kLeft);
+    }
+
+    public double getEncoderAverage() {
+        return (getEncoderLeft() + getEncoderRight()) / 2.0;
     }
     
     public double getEncoderLeft() {
