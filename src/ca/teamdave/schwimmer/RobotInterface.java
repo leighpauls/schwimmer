@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Victor;
 
 /**
  *
@@ -21,8 +21,8 @@ import edu.wpi.first.wpilibj.Victor;
  */
 public class RobotInterface {
     // Robot actuators
-    private Victor mDriveLeft;
-    private Victor mDriveRight;
+    private Jaguar mDriveLeft;
+    private Jaguar mDriveRight;
     
     // Robot sensors
     private Encoder mLeftEncoder;
@@ -41,8 +41,8 @@ public class RobotInterface {
 
    
     public RobotInterface() {
-        mDriveLeft = new Victor(1);
-        mDriveRight = new Victor(3);
+        mDriveLeft = new Jaguar(1);
+        mDriveRight = new Jaguar(3);
         
         mLeftEncoder = new Encoder(1, 2);
         mRightEncoder = new Encoder(3, 4);
