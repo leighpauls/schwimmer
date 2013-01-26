@@ -74,7 +74,7 @@ public class RobotInterface {
     }
     
     public void periodicUpdate(String autoName) {
-        double curEncoderAverage = (getEncoderLeft() + getEncoderRight()) / 2.0;
+        double curEncoderAverage = getEncoderAverage();
         double distTraveled = curEncoderAverage - mLastEncoderAverage;
         mLastEncoderAverage = curEncoderAverage;
         
@@ -119,13 +119,21 @@ public class RobotInterface {
         mDriveLeft.set(left);
         mDriveRight.set(right);
     }  
+
+    private double filterJoystick(double raw) {
+        return raw * raw * DaveUtil.sign(raw);
+    }
     
     public double getDriverX() {
-        return mDriver.getX(GenericHID.Hand.kLeft);
+        return filterJoystick(mDriver.getX(GenericHID.Hand.kLeft));
     }
 
     public double getDriverY() {
-        return -mDriver.getY(GenericHID.Hand.kLeft);
+        return filterJoystick(-mDriver.getY(GenericHID.Hand.kLeft));
+    }
+
+    public double getEncoderAverage() {
+        return (getEncoderLeft() + getEncoderRight()) / 2.0;
     }
     
     public double getEncoderLeft() {
@@ -142,5 +150,9 @@ public class RobotInterface {
     
     public boolean isAutonSelectButton() {
         return mDriver.getRawButton(1);
+    }
+
+    boolean isBaseLockButtonDown() {
+        return mDriver.getRawButton(2);
     }
 }

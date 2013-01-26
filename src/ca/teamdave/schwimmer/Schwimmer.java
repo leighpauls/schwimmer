@@ -10,6 +10,7 @@ package ca.teamdave.schwimmer;
 
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.automodes.AutoModeSelector;
+import ca.teamdave.schwimmer.control.controlunits.BaseLock;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -23,18 +24,21 @@ public class Schwimmer extends IterativeRobot {
     RobotInterface mRobot;
     AutoController mAuto;
     
+    
     AutoModeDescriptor mSelectedAuto;
     private AutoModeSelector mAutoSelector;
-    private long mLastTime = 0;
+    private TeleopController mTeleop;
     
    
     public void robotInit() {
         mRobot = new RobotInterface();
         mAuto = new AutoController();
+        mTeleop = new TeleopController();
         mAutoSelector = new AutoModeSelector();
         mSelectedAuto = mAutoSelector.getDefault();
         System.out.println("Using default auto: " 
                 + mSelectedAuto.getVisibleName());
+        
     }
 
     public void autonomousInit() {
@@ -43,22 +47,24 @@ public class Schwimmer extends IterativeRobot {
                 mSelectedAuto.getInitialHeading());
         mAuto.initAutoMode(mSelectedAuto);
     }
+    
     public void autonomousPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         mAuto.runAutoStep(mRobot);
     }
 
-
+    public void teleopInit() {
+        mTeleop.initTeleopMode();
+    }
+    
     public void teleopPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
 
-        // TODO: make a real teleop class
-        mRobot.setDrive(mRobot.getDriverX(), mRobot.getDriverY());
+        mTeleop.runTeleopCycle(mRobot);
     }
 
     public void testPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
-        
     }
             
     public void disabledPeriodic() {

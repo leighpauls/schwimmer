@@ -6,7 +6,6 @@ package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
-import ca.teamdave.schwimmer.util.DaveUtil;
 
 /**
  *
@@ -14,19 +13,23 @@ import ca.teamdave.schwimmer.util.DaveUtil;
  */
 public class TurnController {
     private final HighStaticPWD mController;
-    private final double mForwardPower;
+    private double mForwardPower;
     private double mDestAngle;
     
     
-    public TurnController(double forwardPower) {
+    public TurnController() {
         mController = new HighStaticPWD(0.02, 0.01, 0.1, 2.0);
         //mController = new HighStaticPWD(0.08, 0.01, 0.5, 2.0);
         mDestAngle = 0.0;
-        mForwardPower = forwardPower;
+        mForwardPower = 0.0;
     }
     
     public void setDestAngle(double newAngle) {
         mDestAngle = newAngle;
+    }
+    
+    public void setForwardPower(double forwardPower) {
+        mForwardPower = forwardPower;
     }
     
     /**
