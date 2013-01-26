@@ -31,7 +31,8 @@ public class LineFollower {
         mTravelDisance = travelDistance;
         
         // just point down the line for the sake of contruction??
-        mTurnController = new TurnController(forwardPower);
+        mTurnController = new TurnController();
+        mTurnController.setForwardPower(forwardPower);
         mDirectionController = new HighStaticPWD(60.0, 0.0, 400.0, 0.02);
         mDirectionController.setSetPoint(0.0);
     }
