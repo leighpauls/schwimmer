@@ -6,7 +6,6 @@ package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
-import ca.teamdave.schwimmer.util.DaveUtil;
 
 /**
  *

@@ -6,8 +6,6 @@ package ca.teamdave.schwimmer;
 
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
-import ca.teamdave.schwimmer.command.drive.DriveForward;
-import ca.teamdave.schwimmer.command.drive.DriveToDistance;
 import ca.teamdave.schwimmer.command.Stop;
 
 /**
