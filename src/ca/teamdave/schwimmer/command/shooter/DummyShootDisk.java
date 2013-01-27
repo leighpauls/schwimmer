@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer.command.shooter;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.command.Command;
+import ca.teamdave.schwimmer.util.Const;
 
 /**
  *
@@ -13,22 +14,16 @@ import ca.teamdave.schwimmer.command.Command;
  */
 public class DummyShootDisk implements Command{
     
-    private static int nextId = 0;
-    
-    private int mTicksLeft = 400 / 20;
-    private boolean mFirstCycle = true;
-    private int id;
+    private int mTicksLeft;
+    private boolean mFirstCycle;
     
     public DummyShootDisk() {
-        id = nextId;
-        nextId++;
-        System.out.println("Made Shot: " + id);
+        mTicksLeft = Const.getInstance().getInt("dummy_shoot_ticks", 400/20);
+        mFirstCycle = true;
     }
     
     public void runCommandStep(RobotInterface robot) {
         if (mFirstCycle) {
-            System.out.println("Fire Disk: " + id);
-            System.out.flush();
             mFirstCycle = false;
         }
         if (mTicksLeft > 0) {
