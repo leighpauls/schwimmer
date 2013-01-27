@@ -7,13 +7,12 @@ package ca.teamdave.schwimmer;
 
 import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  *
@@ -21,8 +20,8 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class RobotInterface {
     // Robot actuators
-    private Jaguar mDriveLeft;
-    private Jaguar mDriveRight;
+    private Victor mDriveLeft;
+    private Victor mDriveRight;
     
     // Robot sensors
     private Encoder mLeftEncoder;
@@ -41,8 +40,8 @@ public class RobotInterface {
 
    
     public RobotInterface() {
-        mDriveLeft = new Jaguar(1);
-        mDriveRight = new Jaguar(3);
+        mDriveLeft = new Victor(1);
+        mDriveRight = new Victor(3);
         
         mLeftEncoder = new Encoder(1, 2);
         mRightEncoder = new Encoder(3, 4);
@@ -113,8 +112,8 @@ public class RobotInterface {
     }
     
     public void setDrive(double x, double y) {
-        double left = y + x;
-        double right = -y + x;
+        double left = -y + x;
+        double right = y + x;
         
         mDriveLeft.set(left);
         mDriveRight.set(right);
