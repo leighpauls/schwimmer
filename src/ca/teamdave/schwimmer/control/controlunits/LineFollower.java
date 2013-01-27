@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
+import ca.teamdave.schwimmer.util.Const;
 import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
 
@@ -33,7 +34,8 @@ public class LineFollower {
         // just point down the line for the sake of contruction??
         mTurnController = new TurnController();
         mTurnController.setForwardPower(forwardPower);
-        mDirectionController = new HighStaticPWD(60.0, 0.0, 400.0, 0.02);
+        mDirectionController = Const.getInstance().pwdFromConst(
+                "line_follower_direction", 60.0, 0.0, 400.0, 0.02);
         mDirectionController.setSetPoint(0.0);
     }
     
@@ -56,7 +58,10 @@ public class LineFollower {
         double distToLine = curPosition.directionalDistanceToLine(
                 mLineOrigin, mLineDirection);
         double turnHardness = mDirectionController.computeCycle(-distToLine);
-        turnHardness = Math.min(90.0, Math.max(-90, turnHardness));
+        double maxHardness = Const.getInstance().getDouble(
+                "line_follower_max_turn_hardness", 90.0);
+        turnHardness = Math.min(
+                maxHardness, Math.max(-maxHardness, turnHardness));
         
         double res = mLineDirection.getFieldAngle() - turnHardness;
         

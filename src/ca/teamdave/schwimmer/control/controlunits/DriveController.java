@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
+import ca.teamdave.schwimmer.util.Const;
 
 /**
  *
@@ -17,7 +18,8 @@ public class DriveController {
     
     public DriveController() {
         mTurnControl = new TurnController();
-        mForwardControl = new HighStaticPWD(4.0, 0.01, 20.0, 0.005);
+        mForwardControl = Const.getInstance().pwdFromConst(
+                "drive_controller_forward", 4.0, 0.01, 20.0, 0.005);
     }
     
     public void setControlDestination(double encoderAverage, double heading) {
