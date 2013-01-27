@@ -4,6 +4,7 @@
  */
 package ca.teamdave.schwimmer.util;
 
+import ca.teamdave.schwimmer.control.HighStaticPWD;
 import com.sun.squawk.util.LineReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,12 +16,19 @@ import javax.microedition.io.Connector;
  *
  * @author leighpauls
  */
-public class DaveConstants {
+public class Const {
     private final Hashtable mValueTable;
+    private static Const sInstance = null;
     
-    public DaveConstants() {
+    private Const() {
         mValueTable = new Hashtable();
-        
+    }
+    
+    public static Const getInstance() {
+        if (sInstance == null) {
+            sInstance = new Const();
+        }
+        return sInstance;
     }
     
     public void reloadConstants() {
@@ -62,7 +70,7 @@ public class DaveConstants {
                 }
             }
             // don't care about comments
-            if (curLine.startsWith("#")) {
+            if (curLine.startsWith("#") || curLine.length() == 0) {
                 continue;
             }
             int equalBreak = curLine.indexOf("=");
@@ -114,5 +122,14 @@ public class DaveConstants {
             System.err.println(name + ": default does not match real value");
         }
         return res;
+    }
+    
+    public HighStaticPWD pwdFromConst(String namePrefx, double defaultP,
+            double defaultW, double defaultD, double defaultError) {
+        return new HighStaticPWD(
+                getDouble(namePrefx + "_p", defaultP),
+                getDouble(namePrefx + "_w", defaultW),
+                getDouble(namePrefx + "_d", defaultD),
+                getDouble(namePrefx + "_error", defaultError));
     }
 }
