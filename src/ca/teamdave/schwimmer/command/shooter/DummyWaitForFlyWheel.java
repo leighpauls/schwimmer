@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer.command.shooter;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.command.Command;
+import ca.teamdave.schwimmer.util.Const;
 
 /**
  *
@@ -13,8 +14,14 @@ import ca.teamdave.schwimmer.command.Command;
  */
 public class DummyWaitForFlyWheel implements Command {
 
-    private int mTicksLeft = 2000 / 20;
-    private boolean mFirstCycle = true;
+    private int mTicksLeft;
+    private boolean mFirstCycle;
+    
+    public DummyWaitForFlyWheel() {
+        mTicksLeft = Const.getInstance().getInt(
+                "dummy_flywheel_ticks", 2000 / 20);
+        mFirstCycle = true;
+    }
     
     public void runCommandStep(RobotInterface robot) {
         if (mFirstCycle) {

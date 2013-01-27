@@ -13,6 +13,7 @@ import ca.teamdave.schwimmer.command.meta.NoOp;
 import ca.teamdave.schwimmer.command.meta.Series;
 import ca.teamdave.schwimmer.command.shooter.DummyShootDisk;
 import ca.teamdave.schwimmer.command.shooter.DummyWaitForFlyWheel;
+import ca.teamdave.schwimmer.util.Const;
 import ca.teamdave.schwimmer.util.DaveVector;
 
 /**
@@ -26,10 +27,14 @@ public class Dummy7Disk extends AutoModeDescriptor {
     }
 
     public Command getTopLevelCommand() {
-        double farDiskDist = 3.5;
-        double closeDiskDist = 1.2;
-        double sidePathDist = 1.5;
-        double straightPower = 0.5;
+        double farDiskDist = Const.getInstance().getDouble(
+                "dummy_7_disk_far_meters", 3.5);
+        double closeDiskDist = Const.getInstance().getDouble(
+                "dummy_7_disk_close_meters", 1.2);
+        double sidePathDist = Const.getInstance().getDouble(
+                "dummy_7_disk_side_meters", 1.5);
+        double straightPower = Const.getInstance().getDouble(
+                "dummy_7_disk_power", 0.5);
 
         // TODO: Put the flywheel on and keep it on
 

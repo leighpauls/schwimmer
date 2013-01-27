@@ -5,6 +5,7 @@
 package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.util.Const;
 
 /**
  *
@@ -23,7 +24,9 @@ public class BaseLock {
     }
     
     private double getHeadingTrim(RobotInterface robot) {
-        return -robot.getDriverX() * 45;
+        double maxTrim = Const.getInstance().getDouble(
+                "base_lock_max_trim", 45);
+        return -robot.getDriverX() * maxTrim;
     }
     
     public void engageLock(RobotInterface robot) {

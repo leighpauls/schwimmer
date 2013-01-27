@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.RobotInterface;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
+import ca.teamdave.schwimmer.util.Const;
 
 /**
  *
@@ -18,8 +19,8 @@ public class TurnController {
     
     
     public TurnController() {
-        mController = new HighStaticPWD(0.02, 0.01, 0.1, 2.0);
-        //mController = new HighStaticPWD(0.08, 0.01, 0.5, 2.0);
+        mController = Const.getInstance().pwdFromConst(
+                "turn_controller", 0.02, 0.01, 0.1, 2.0);
         mDestAngle = 0.0;
         mForwardPower = 0.0;
     }
