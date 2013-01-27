@@ -11,6 +11,7 @@ package ca.teamdave.schwimmer;
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.automodes.AutoModeSelector;
 import ca.teamdave.schwimmer.control.controlunits.BaseLock;
+import ca.teamdave.schwimmer.util.Const;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -31,9 +32,10 @@ public class Schwimmer extends IterativeRobot {
     
    
     public void robotInit() {
+        Const.getInstance().reloadConstants();
         mRobot = new RobotInterface();
-        mAuto = new AutoController();
-        mTeleop = new TeleopController();
+        mAuto = null;
+        mTeleop = null;
         mAutoSelector = new AutoModeSelector();
         mSelectedAuto = mAutoSelector.getDefault();
         System.out.println("Using default auto: " 
@@ -42,9 +44,11 @@ public class Schwimmer extends IterativeRobot {
     }
 
     public void autonomousInit() {
+        Const.getInstance().reloadConstants();
         mRobot.reinit(
                 mSelectedAuto.getInitialPosition(),
                 mSelectedAuto.getInitialHeading());
+        mAuto = new AutoController();
         mAuto.initAutoMode(mSelectedAuto);
     }
     
@@ -54,6 +58,8 @@ public class Schwimmer extends IterativeRobot {
     }
 
     public void teleopInit() {
+        Const.getInstance().reloadConstants();
+        mTeleop = new TeleopController();
         mTeleop.initTeleopMode();
     }
     
@@ -67,6 +73,11 @@ public class Schwimmer extends IterativeRobot {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
     }
             
+    
+    public void disabledInit() {
+        Const.getInstance().dumpEffectiveTable();
+    }
+    
     public void disabledPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         

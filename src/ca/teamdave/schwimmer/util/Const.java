@@ -71,6 +71,7 @@ public class Const {
                         || curChar == '\r') {
                     curLine = curLine.substring(0, curIdx) + curLine.substring(curIdx+1);
                 }
+                curIdx++;
             }
             // don't care about comments
             if (curLine.startsWith("#") || curLine.length() == 0) {
