@@ -81,9 +81,9 @@ public class Schwimmer extends IterativeRobot {
     public void disabledPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         
-        if (mRobot.isAutonSelectButton()) {
+        if (mRobot.getDriver().isAutonSelectButtonDown()) {
             mSelectedAuto = mAutoSelector.selectFromAnalogRange(
-                    mRobot.getDriverY());
+                    mRobot.getDriver().getDriverY());
         }
     }
 }

@@ -5,6 +5,7 @@
 package ca.teamdave.schwimmer.util;
 
 import ca.teamdave.schwimmer.control.HighStaticPWD;
+import ca.teamdave.schwimmer.control.LinearPID;
 import com.sun.squawk.util.LineReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -117,7 +118,7 @@ public class Const {
     private int getIntImpl(String name, int defaultVal) {
         String value = (String)mValueTable.get(name);
         if (value == null) {
-            System.err.println("No Value for " + name);
+            System.err.println("No Value for " + name + " = " + defaultVal);
             return defaultVal;
         }
         int res;
@@ -136,7 +137,7 @@ public class Const {
     private double getDoubleImpl(String name, double defaultVal) {
         String value = (String)mValueTable.get(name);
         if (value == null) {
-            System.err.println("No Value for " + name);
+            System.err.println("No Value for " + name + " = " + defaultVal);
             return defaultVal;
         }
         double res;
@@ -152,12 +153,29 @@ public class Const {
         return res;
     }
     
-    public HighStaticPWD pwdFromConst(String namePrefx, double defaultP,
-            double defaultW, double defaultD, double defaultError) {
+    public HighStaticPWD pwdFromConst(
+            String namePrefix, 
+            double defaultP,
+            double defaultW, 
+            double defaultD,
+            double defaultError) {
         return new HighStaticPWD(
-                getDouble(namePrefx + "_p", defaultP),
-                getDouble(namePrefx + "_w", defaultW),
-                getDouble(namePrefx + "_d", defaultD),
-                getDouble(namePrefx + "_error", defaultError));
+                getDouble(namePrefix + "_p", defaultP),
+                getDouble(namePrefix + "_w", defaultW),
+                getDouble(namePrefix + "_d", defaultD),
+                getDouble(namePrefix + "_error", defaultError));
+    }
+    
+    public LinearPID pidFromConst(
+            String namePrefix,
+            double defaultP,
+            double defaultI,
+            double defaultD,
+            double defaultError) {
+        return new LinearPID(
+                getDouble(namePrefix + "_p", defaultP),
+                getDouble(namePrefix + "_i", defaultI),
+                getDouble(namePrefix + "_d", defaultD),
+                getDouble(namePrefix + "_error", defaultError));
     }
 }

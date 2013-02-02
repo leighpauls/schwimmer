@@ -8,69 +8,62 @@ package ca.teamdave.schwimmer.control;
  *
  * @author leighpauls
  */
-public class HighStaticPWD {
+public class LinearPID {
     private double mP;
-    private double mW;
+    private double mI;
     private double mD;
     private double mAcceptableError;
-    private double mSetPoint;
-    private boolean mFirstCycle;
-    private double mLastError;
-    private int mErrorCount;
     private boolean mDone;
+    private double mSetPoint;
+    private double mLastError;
+    private double mIntegration;
+    private boolean mFirstCycle;
     
-    public HighStaticPWD(double p, double w, double d,
-            double acceptableError) {
-        setControlConstants(p, w, d, acceptableError);
-
+    public LinearPID(double p, double i, double d, double acceptableError) {
+        setControlConstants(p, i, d, acceptableError);
+        
         mDone = false;
         mSetPoint = 0.0;
         mLastError = 0.0;
     }
-
+    
     public void setSetPoint(double newSetPoint) {
         setSetPoint(newSetPoint, false);
     }
+    
     public void setSetPoint(double newSetPoint, boolean softReset) {
         mSetPoint = newSetPoint;
         if (!softReset) {
-            mErrorCount = 0;
+            mIntegration = 0.0;
             mFirstCycle = true;
         }
     }
     
-    public final void setControlConstants(double p, double w, double d, double acceptableErrror) {
+    public void setControlConstants(double p, double i, double d, double acceptableError) {
         mP = Math.abs(p);
-        mW = Math.abs(w);
+        mI = Math.abs(i);
         mD = Math.abs(d);
-        mAcceptableError = Math.abs(acceptableErrror);
-        mErrorCount = 0;
+        mAcceptableError = Math.abs(acceptableError);
+        mIntegration = 0.0;
         mFirstCycle = true;
     }
-    
+
     public double computeCycle(double curPosition) {
         double output = 0.0;
-
-        // Proportional contribuion
+        
         double error = curPosition - mSetPoint;
         output -= mP * error;
         
-        // Wait contribution
-        if (Math.abs(error) < mAcceptableError || (error * mErrorCount < 0)) {
-            mErrorCount = 0;
-        } else {
-            mErrorCount += (error > 0) ? 1 : -1;
-        }
+        // integral
+        mIntegration += error;
+        output -= mI * mIntegration;
         
-        output -= mW * mErrorCount;
-        
-        // Derivitive contribution
         double change = mFirstCycle ? 0.0 : (error - mLastError);
         mLastError = error;
         mFirstCycle = false;
         
         output -= mD * change;
-
+        
         mDone = Math.abs(error) < mAcceptableError;
         
         return output;
@@ -79,4 +72,5 @@ public class HighStaticPWD {
     public boolean isDone() {
         return mDone;
     }
+    
 }

@@ -21,40 +21,58 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class RobotInterface {
     // Robot actuators
-    private Jaguar mDriveLeft;
-    private Jaguar mDriveRight;
+    private final Jaguar mDriveLeft;
+    private final Jaguar mDriveRight;
+
+    private final Jaguar mFrontShooter;
+    private final Jaguar mBackShooter;
+    
     
     // Robot sensors
-    private Encoder mLeftEncoder;
-    private Encoder mRightEncoder;
+    private final Encoder mLeftEncoder;
+    private final Encoder mRightEncoder;
     private Gyro mGyro;
+    
+    private final Encoder mFrontShooterEncoder;
+    private final Encoder mBackShooterEncoder;
     
     // TODO: find this const
     static private final double K_METERS_PER_ENCODER_TICK = 1.0 / 791.5;
     
-    // human input
-    private Joystick mDriver;
+    // robot state
     private double mLastEncoderAverage;
     private DaveVector mPos;
     private double mHeading;
     private double mGyroOffset;
-
+    private final DriverInterface mDriverInterface;
+    
    
     public RobotInterface() {
-        mDriveLeft = new Jaguar(1);
-        mDriveRight = new Jaguar(3);
+        // FIXME: if these scrambled values end up in master, Leigh's fucked up
+        // Don't let this comment get merged in!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        mDriveLeft = new Jaguar(4);
+        mDriveRight = new Jaguar(5);
         
-        mLeftEncoder = new Encoder(1, 2);
-        mRightEncoder = new Encoder(3, 4);
+        mLeftEncoder = new Encoder(5, 6);
+        mRightEncoder = new Encoder(7, 8);
+
+        // TODO: replace with real controllers on the real robot
+        mFrontShooter = new Jaguar(1);
+        mBackShooter = new Jaguar(3);
+        mFrontShooterEncoder = new Encoder(1, 2);
+        mBackShooterEncoder = new Encoder(3, 4);
         
         mGyro = new Gyro(1);
         mGyro.setSensitivity(0.0125 * 200.0 / 360.0);
         
-        mDriver = new Joystick(1);
+        mDriverInterface = new DriverInterface();
         
         reinit();
     }
 
+    public DriverInterface getDriver() {
+        return mDriverInterface;
+    }
     
     final public void reinit() {
         reinit(DaveVector.fromXY(0, 0), 0.0);
@@ -67,6 +85,11 @@ public class RobotInterface {
         mLeftEncoder.start();
         mRightEncoder.reset();
         mRightEncoder.start();
+        
+        mFrontShooterEncoder.reset();
+        mFrontShooterEncoder.start();
+        mBackShooterEncoder.reset();
+        mBackShooterEncoder.start();
         
         mGyro.reset();
         mGyroOffset = newHeading;
@@ -106,6 +129,24 @@ public class RobotInterface {
                 "Auto: " + autoName + "               ");
         
         DriverStationLCD.getInstance().updateLCD();
+        
+    }
+    
+    public void setShooterPower(double front, double back) {
+        mFrontShooter.set(front);
+        mBackShooter.set(back);
+        System.out.println(front + "," + getFrontShooterSpeed());
+    }
+
+    public double getFrontShooterSpeed() {
+        double res = -mFrontShooterEncoder.getRate(); // ticks per second
+        // System.out.println("Front speed: " + res);
+        return res;
+                
+    }
+    
+    public double getBackShooterSpeed() {
+        return -mBackShooterEncoder.getRate();
     }
     
     public DaveVector getPosition() {
@@ -119,18 +160,6 @@ public class RobotInterface {
         mDriveLeft.set(left);
         mDriveRight.set(right);
     }  
-
-    private double filterJoystick(double raw) {
-        return raw * raw * DaveUtil.sign(raw);
-    }
-    
-    public double getDriverX() {
-        return filterJoystick(mDriver.getX(GenericHID.Hand.kLeft));
-    }
-
-    public double getDriverY() {
-        return filterJoystick(-mDriver.getY(GenericHID.Hand.kLeft));
-    }
 
     public double getEncoderAverage() {
         return (getEncoderLeft() + getEncoderRight()) / 2.0;
@@ -146,13 +175,5 @@ public class RobotInterface {
 
     public double getHeading() {
         return mHeading;
-    }
-    
-    public boolean isAutonSelectButton() {
-        return mDriver.getRawButton(1);
-    }
-
-    boolean isBaseLockButtonDown() {
-        return mDriver.getRawButton(2);
     }
 }

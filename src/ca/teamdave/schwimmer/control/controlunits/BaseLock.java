@@ -26,7 +26,7 @@ public class BaseLock {
     private double getHeadingTrim(RobotInterface robot) {
         double maxTrim = Const.getInstance().getDouble(
                 "base_lock_max_trim", 45);
-        return -robot.getDriverX() * maxTrim;
+        return -robot.getDriver().getDriverX() * maxTrim;
     }
     
     public void engageLock(RobotInterface robot) {
