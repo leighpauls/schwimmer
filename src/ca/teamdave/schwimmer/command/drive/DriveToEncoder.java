@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command.drive;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.control.controlunits.DriveController;
 
@@ -22,7 +22,7 @@ public class DriveToEncoder implements Command {
         mIsDone = false;
     }
     
-    public void runCommandStep(RobotInterface robot) {
+    public void runCommandStep(Robot robot) {
         mIsDone = mDriveController.doCycle(robot);
     }
 

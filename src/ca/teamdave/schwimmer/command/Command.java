@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 
 /**
  *
@@ -12,7 +12,7 @@ import ca.teamdave.schwimmer.RobotInterface;
  */
 public interface Command {
     
-    void runCommandStep(RobotInterface robot);
+    void runCommandStep(Robot robot);
     boolean isDone();
     
 }

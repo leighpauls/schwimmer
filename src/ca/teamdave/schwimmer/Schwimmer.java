@@ -8,6 +8,7 @@
 package ca.teamdave.schwimmer;
 
 
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.automodes.AutoModeSelector;
 import ca.teamdave.schwimmer.control.controlunits.BaseLock;
@@ -22,7 +23,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * directory.
  */
 public class Schwimmer extends IterativeRobot {
-    RobotInterface mRobot;
+    Robot mRobot;
     AutoController mAuto;
     
     
@@ -33,7 +34,7 @@ public class Schwimmer extends IterativeRobot {
    
     public void robotInit() {
         Const.getInstance().reloadConstants();
-        mRobot = new RobotInterface();
+        mRobot = new Robot();
         mAuto = null;
         mTeleop = null;
         mAutoSelector = new AutoModeSelector();
@@ -81,9 +82,9 @@ public class Schwimmer extends IterativeRobot {
     public void disabledPeriodic() {
         mRobot.periodicUpdate(mSelectedAuto.getVisibleName());
         
-        if (mRobot.getDriver().isAutonSelectButtonDown()) {
+        if (mRobot.getOperators().isAutonSelectButtonDown()) {
             mSelectedAuto = mAutoSelector.selectFromAnalogRange(
-                    mRobot.getDriver().getDriverY());
+                    mRobot.getOperators().getDriverY());
         }
     }
 }

@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command.drive;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.command.Command;
 
 /**
@@ -22,9 +22,9 @@ public class DriveForward implements Command {
         return steps_remaining <= 0;
     }
 
-    public void runCommandStep(RobotInterface robot) {
+    public void runCommandStep(Robot robot) {
         steps_remaining--;
-        robot.setDrive(0.0, 1.0);
+        robot.getDrive().setDrive(0.0, 1.0);
     }
     
 }

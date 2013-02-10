@@ -4,7 +4,8 @@
  */
 package ca.teamdave.schwimmer.control.controlunits;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Drive;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.util.Const;
 
 /**
@@ -23,23 +24,24 @@ public class BaseLock {
         mDriveController = new DriveController();
     }
     
-    private double getHeadingTrim(RobotInterface robot) {
+    private double getHeadingTrim(Robot robot) {
         double maxTrim = Const.getInstance().getDouble(
                 "base_lock_max_trim", 45);
-        return -robot.getDriver().getDriverX() * maxTrim;
+        return -robot.getOperators().getDriverX() * maxTrim;
     }
     
-    public void engageLock(RobotInterface robot) {
+    public void engageLock(Robot robot) {
         mEngaged = true;
-        mBaseHeading = robot.getHeading();
-        mBaseEncoder = robot.getEncoderAverage();
+        Drive d = robot.getDrive();
+        mBaseHeading = d.getHeading();
+        mBaseEncoder = d.getEncoderAverage();
     }
     
     public void releaseLock() {
         mEngaged = false;
     }
     
-    public void doCycle(RobotInterface robot) {
+    public void doCycle(Robot robot) {
         if (!mEngaged) {
             System.out.println("Running while not engaged");
             return;

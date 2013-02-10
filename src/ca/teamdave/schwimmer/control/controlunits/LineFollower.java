@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.control.controlunits;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
 import ca.teamdave.schwimmer.util.Const;
 import ca.teamdave.schwimmer.util.DaveUtil;
@@ -44,8 +44,8 @@ public class LineFollower {
      * @param robot
      * @return true iff I've passed the finishing line
      */
-    public boolean doCycle(RobotInterface robot) {
-        DaveVector curPos = robot.getPosition();
+    public boolean doCycle(Robot robot) {
+        DaveVector curPos = robot.getDrive().getPosition();
         mTurnController.setDestAngle(getDesiredAngle(curPos));
         mTurnController.doCycle(robot);
         

@@ -4,8 +4,10 @@
  */
 package ca.teamdave.schwimmer;
 
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.controlunits.BaseLock;
-import ca.teamdave.schwimmer.control.controlunits.Shooter;
+import ca.teamdave.schwimmer.control.controlunits.ShotControl;
+import ca.teamdave.schwimmer.util.Const;
 
 /**
  *
@@ -14,12 +16,12 @@ import ca.teamdave.schwimmer.control.controlunits.Shooter;
 public class TeleopController {
     private final BaseLock mBaseLock;
     private boolean mBaseLockEngaged;
-    private final Shooter mShooter;
+    private final ShotControl mShooter;
     
     
     public TeleopController() {
         mBaseLock = new BaseLock();
-        mShooter = new Shooter();
+        mShooter = new ShotControl();
         mBaseLockEngaged = false;
     }
     
@@ -27,8 +29,8 @@ public class TeleopController {
         mBaseLockEngaged = false;
     }
     
-    public void runTeleopCycle(RobotInterface robot) {
-        if (robot.getDriver().isBaseLockButtonDown()) {
+    public void runTeleopCycle(Robot robot) {
+        if (robot.getOperators().isBaseLockButtonDown()) {
             if (!mBaseLockEngaged) {
                 mBaseLock.engageLock(robot);
                 mBaseLockEngaged = true;
@@ -37,22 +39,17 @@ public class TeleopController {
         } else {
             mBaseLock.releaseLock();
             mBaseLockEngaged = false;
-            robot.setDrive(robot.getDriver().getDriverX(), robot.getDriver().getDriverY());            
+            robot.getDrive().setDrive(robot.getOperators().getDriverX(), robot.getOperators().getDriverY());            
         }
         
-        if (robot.getDriver().isShooterButtonDown()) {
-            if (!mShooter.isEngaged()) {
-                mShooter.engage();
-            }
-        } else if (mShooter.isEngaged()) {
-            mShooter.disengage();
+        
+        if (robot.getOperators().isShooterButtonDown()) {
+            robot.getShooter().setPower(
+                    Const.getInstance().getDouble("shooter_front_ff", 0.9),
+                    Const.getInstance().getDouble("shoorter_back_ff", 0.9));
+        } else {
+            robot.getShooter().setPower(0, 0);
         }
 
-        if (mShooter.isEngaged()) {
-            boolean shooterSpun = mShooter.doCycle(robot);
-            System.out.println("Shooter " + (shooterSpun ? "spun" : "spinning up"));
-        } else {
-            robot.setShooterPower(robot.getDriver().getDriverY(), 0.0);
-        }
     }
 }

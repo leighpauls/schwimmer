@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command.meta;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.command.Command;
 
 /**
@@ -21,7 +21,7 @@ public class Series implements Command {
         mCurCommand = 0;
     }
     
-    public void runCommandStep(RobotInterface robot) {
+    public void runCommandStep(Robot robot) {
         if (mCurCommand >= mChildren.length) {
             return;
         }

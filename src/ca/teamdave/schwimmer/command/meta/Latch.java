@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command.meta;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.command.Command;
 
 /**
@@ -23,7 +23,7 @@ public class Latch implements Command {
         mIsDone = false;
     }
     
-    public void runCommandStep(RobotInterface robot) {
+    public void runCommandStep(Robot robot) {
         mIsDone = true;
         for (int i = 0; i < mChildren.length; ++i) {
             mChildren[i].runCommandStep(robot);

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.teamdave.schwimmer;
+package ca.teamdave.schwimmer.interfaces;
 
 import ca.teamdave.schwimmer.util.DaveUtil;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.Joystick;
  *
  * @author leighpauls
  */
-public class DriverInterface {
+public class Operators {
     private final Joystick mDriver;
     
-    public DriverInterface() {
+    public Operators() {
         mDriver = new Joystick(1);
     }
     

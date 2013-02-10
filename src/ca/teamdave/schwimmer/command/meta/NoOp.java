@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command.meta;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.command.Command;
 
 /**
@@ -14,7 +14,7 @@ import ca.teamdave.schwimmer.command.Command;
  */
 public class NoOp implements Command {
 
-    public void runCommandStep(RobotInterface robot) { }
+    public void runCommandStep(Robot robot) { }
 
     public boolean isDone() {
         return true;

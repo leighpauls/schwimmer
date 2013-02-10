@@ -4,6 +4,7 @@
  */
 package ca.teamdave.schwimmer;
 
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.command.Stop;
@@ -23,7 +24,7 @@ public class AutoController {
         mDone = false;
     }
     
-    public void runAutoStep(RobotInterface robot) {
+    public void runAutoStep(Robot robot) {
         // make sure I don't crap out if a list ends
         if (mDone) {
             mSafetyStop.runCommandStep(robot);

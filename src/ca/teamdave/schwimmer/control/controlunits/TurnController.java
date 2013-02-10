@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.control.controlunits;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
 import ca.teamdave.schwimmer.util.Const;
 
@@ -38,8 +38,8 @@ public class TurnController {
      * @param robot
      * @return true iff the control loop is done
      */
-    public boolean doCycle(RobotInterface robot) {
-        double curHeading = robot.getHeading();
+    public boolean doCycle(Robot robot) {
+        double curHeading = robot.getDrive().getHeading();
         double destAngle = mDestAngle;
         
         while (Math.abs(destAngle - curHeading) > 180.0) {
@@ -48,7 +48,7 @@ public class TurnController {
         
         mController.setSetPoint(destAngle, true);
         
-        robot.setDrive(-mController.computeCycle(robot.getHeading()), mForwardPower);
+        robot.getDrive().setDrive(-mController.computeCycle(robot.getDrive().getHeading()), mForwardPower);
         return mController.isDone();
     }
 

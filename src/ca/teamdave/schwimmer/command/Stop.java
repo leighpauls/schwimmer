@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 
 /**
  * Stops everything
@@ -12,8 +12,8 @@ import ca.teamdave.schwimmer.RobotInterface;
  */
 public class Stop implements Command {
 
-    public void runCommandStep(RobotInterface robot) {
-        robot.setDrive(0.0, 0.0);
+    public void runCommandStep(Robot robot) {
+        robot.getDrive().setDrive(0.0, 0.0);
     }
 
     public boolean isDone() {

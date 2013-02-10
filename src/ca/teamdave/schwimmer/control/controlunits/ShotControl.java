@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.control.controlunits;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.LinearPID;
 import ca.teamdave.schwimmer.util.Const;
 
@@ -12,13 +12,13 @@ import ca.teamdave.schwimmer.util.Const;
  *
  * @author leighpauls
  */
-public class Shooter {
+public class ShotControl {
     private final LinearPID mFrontControl;
     private final LinearPID mBackControl;
     private boolean mEngaged;
 
 
-    public Shooter() {
+    public ShotControl() {
         mFrontControl = Const.getInstance().pidFromConst(
                 "shooter_front",
                 0.001, 0.0, 0.0, 10);
@@ -50,14 +50,14 @@ public class Shooter {
         return mEngaged;
     }
     
-    public boolean doCycle(RobotInterface robot) {
+    public boolean doCycle(Robot robot) {
         if (mEngaged) {
-            robot.setShooterPower(
-                    mFrontControl.computeCycle(robot.getFrontShooterSpeed()),
-                    mBackControl.computeCycle(robot.getBackShooterSpeed()));
+            robot.getShooter().setPower(
+                    mFrontControl.computeCycle(robot.getShooter().getFrontSpeed()),
+                    mBackControl.computeCycle(robot.getShooter().getBackSpeed()));
             return mFrontControl.isDone() && mBackControl.isDone();
         } else {
-            robot.setShooterPower(0.0, 0.0);
+            robot.getShooter().setPower(0.0, 0.0);
             return false;
         }
                 

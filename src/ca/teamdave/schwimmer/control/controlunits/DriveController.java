@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.control.controlunits;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.HighStaticPWD;
 import ca.teamdave.schwimmer.util.Const;
 
@@ -27,8 +27,8 @@ public class DriveController {
         mTurnControl.setDestAngle(heading);
     }
     
-    public boolean doCycle(RobotInterface robot) {
-        double forwardPower = mForwardControl.computeCycle(robot.getEncoderAverage());
+    public boolean doCycle(Robot robot) {
+        double forwardPower = mForwardControl.computeCycle(robot.getDrive().getEncoderAverage());
         mTurnControl.setForwardPower(forwardPower);
         
         boolean turnDone = mTurnControl.doCycle(robot);

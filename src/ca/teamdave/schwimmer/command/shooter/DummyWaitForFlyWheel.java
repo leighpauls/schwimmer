@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.command.shooter;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.util.Const;
 
@@ -23,7 +23,7 @@ public class DummyWaitForFlyWheel implements Command {
         mFirstCycle = true;
     }
     
-    public void runCommandStep(RobotInterface robot) {
+    public void runCommandStep(Robot robot) {
         if (mFirstCycle) {
             System.out.println("Spnning up fly wheel");
             mFirstCycle = false;

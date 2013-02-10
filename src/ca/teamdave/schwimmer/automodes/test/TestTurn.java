@@ -4,7 +4,7 @@
  */
 package ca.teamdave.schwimmer.automodes.test;
 
-import ca.teamdave.schwimmer.RobotInterface;
+import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.command.drive.TurnToHeading;
