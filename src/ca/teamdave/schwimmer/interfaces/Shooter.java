@@ -29,8 +29,8 @@ public class Shooter {
         mFrontShooterEncoder = new Encoder(5, 6);
         mBackShooterEncoder = new Encoder(7, 8);
         
-        mRaiserUp = new Solenoid(3);
-        mRaiserDown = new Solenoid(4);
+        mRaiserUp = new Solenoid(1);
+        mRaiserDown = new Solenoid(2);
         
         reinit();
         

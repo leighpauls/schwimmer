@@ -18,11 +18,11 @@ public class Hopper {
     private boolean mIsRaiserUp;
     
     public Hopper() {
-        mRaiserUp = new Solenoid(1);
-        mRaiserDown = new Solenoid(2);
+        mRaiserUp = new Solenoid(1, 5);
+        mRaiserDown = new Solenoid(1, 6);
         
-        mPunchExtend = new Solenoid(3);
-        mPunchRetract = new Solenoid(4);
+        mPunchExtend = new Solenoid(2, 1);
+        mPunchRetract = new Solenoid(2, 2);
         
         setRaiser(true);
         setPunch(false);

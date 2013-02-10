@@ -19,8 +19,8 @@ public class Feeder {
     
     public Feeder(Hopper hopper) {
         mIntakeMotor = new Victor(7);
-        mRaiserUp = new Solenoid(1, 1);
-        mRaiserDown = new Solenoid(1, 2);
+        mRaiserUp = new Solenoid(1, 7);
+        mRaiserDown = new Solenoid(1, 8);
         mHopper = hopper;
         
         activateFeeder(false);

@@ -27,6 +27,7 @@ public class Robot {
     private final Drive mDrive;
     private final Hopper mHopper;
     private final Feeder mFeeder;
+    private final Hanger mHanger;
     
    
     public Robot() {
@@ -36,6 +37,7 @@ public class Robot {
         mOperators = new Operators();
         mHopper = new Hopper();
         mFeeder = new Feeder(mHopper);
+        mHanger = new Hanger();
         
         reinit();
     }
@@ -58,6 +60,10 @@ public class Robot {
     
     public Feeder getFeeder() {
         return mFeeder;
+    }
+    
+    public Hanger getHanger() {
+        return mHanger;
     }
     
     final public void reinit() {
