@@ -5,6 +5,7 @@
 package ca.teamdave.schwimmer.interfaces;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
@@ -18,6 +19,8 @@ public class Shooter {
     
     private final Encoder mFrontShooterEncoder;
     private final Encoder mBackShooterEncoder;
+    private final Solenoid mRaiserUp;
+    private final Solenoid mRaiserDown;
     
     public Shooter() {
         mFrontMotor = new Victor(5);
@@ -26,10 +29,14 @@ public class Shooter {
         mFrontShooterEncoder = new Encoder(5, 6);
         mBackShooterEncoder = new Encoder(7, 8);
         
+        mRaiserUp = new Solenoid(3);
+        mRaiserDown = new Solenoid(4);
+        
         reinit();
+        
     }
     
-    public void reinit() {
+    final public void reinit() {
         mFrontShooterEncoder.reset();
         mFrontShooterEncoder.start();
         mBackShooterEncoder.reset();
@@ -46,5 +53,10 @@ public class Shooter {
     }
     public double getBackSpeed() {
         return mBackShooterEncoder.getRate();
+    }
+    
+    public void setRaiser(boolean up) {
+        mRaiserUp.set(up);
+        mRaiserDown.set(!up);
     }
 }

@@ -7,6 +7,7 @@ package ca.teamdave.schwimmer.interfaces;
 import ca.teamdave.schwimmer.util.DaveVector;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
@@ -32,6 +33,8 @@ public class Drive {
     private double mHeading;
     private DaveVector mPos;
     private double mLastEncoderAverage;
+    private final Solenoid mShifterHigh;
+    private final Solenoid mShifterLow;
 
     public Drive() {
         mLeftFrontMotor = new Victor(1);
@@ -39,6 +42,9 @@ public class Drive {
         
         mRightFrontMotor = new Victor(3);
         mRightBackMotor = new Victor(4);
+        
+        mShifterHigh = new Solenoid(2, 1);
+        mShifterLow = new Solenoid(2, 2);
         
         mLeftEncoder = new Encoder(1, 2);
         mRightEncoder = new Encoder(3, 4);
@@ -79,7 +85,11 @@ public class Drive {
         mHeading = mGyroOffset - mGyro.getAngle();
         
         mPos.moveFieldRadial(distTraveled, mHeading);
-        
+    }
+
+    public void setShifter(boolean high) {
+        mShifterHigh.set(high);
+        mShifterLow.set(!high);
     }
     
     public DaveVector getPosition() {

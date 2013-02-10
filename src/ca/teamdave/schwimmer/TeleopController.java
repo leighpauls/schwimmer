@@ -7,6 +7,9 @@ package ca.teamdave.schwimmer;
 import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.controlunits.BaseLock;
 import ca.teamdave.schwimmer.control.controlunits.ShotControl;
+import ca.teamdave.schwimmer.interfaces.Hopper;
+import ca.teamdave.schwimmer.interfaces.Operators;
+import ca.teamdave.schwimmer.interfaces.Shooter;
 import ca.teamdave.schwimmer.util.Const;
 
 /**
@@ -30,7 +33,9 @@ public class TeleopController {
     }
     
     public void runTeleopCycle(Robot robot) {
-        if (robot.getOperators().isBaseLockButtonDown()) {
+        Operators op = robot.getOperators();
+        
+        if (op.isBaseLockButtonDown()) {
             if (!mBaseLockEngaged) {
                 mBaseLock.engageLock(robot);
                 mBaseLockEngaged = true;
@@ -39,17 +44,39 @@ public class TeleopController {
         } else {
             mBaseLock.releaseLock();
             mBaseLockEngaged = false;
-            robot.getDrive().setDrive(robot.getOperators().getDriverX(), robot.getOperators().getDriverY());            
+            robot.getDrive().setDrive(
+                    op.getDriverX(),
+                    op.getDriverY());            
         }
         
-        
-        if (robot.getOperators().isShooterButtonDown()) {
-            robot.getShooter().setPower(
+        Shooter shot = robot.getShooter();
+        // Shooter Speed
+        if (op.isShooterButtonDown()) {
+            shot.setPower(
                     Const.getInstance().getDouble("shooter_front_ff", 0.9),
                     Const.getInstance().getDouble("shoorter_back_ff", 0.9));
         } else {
-            robot.getShooter().setPower(0, 0);
+            shot.setPower(0, 0);
         }
+        // Shooter raiser
+        if (op.isShooterHighButtonDown()) {
+            shot.setRaiser(true);
+        } else if (op.isShooterLowButtonDown()){
+            shot.setRaiser(false);
+        }
+        
 
+        Hopper hop = robot.getHopper();
+        // hopper raiser
+        if (op.isHopperHighButtonDown()) {
+            hop.setRaiser(true);
+        } else if (op.isHopperLowButtonDown()) {
+            hop.setRaiser(false);
+        }
+        // hopper punch
+        hop.setPunch(op.isPunchButtonDown());
+        
+        // Feeder
+        robot.getFeeder().activateFeeder(op.isIntakeButtonDown());
     }
 }
