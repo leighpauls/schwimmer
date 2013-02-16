@@ -23,14 +23,15 @@ public class Shooter {
     private final Solenoid mRaiserDown;
     
     public Shooter() {
-        mFrontMotor = new Victor(5);
-        mBackMotor = new Victor(6);
+        System.out.println("making Shooter");
+        mFrontMotor = new Victor(1, 5);
+        mBackMotor = new Victor(1, 6);
         
-        mFrontShooterEncoder = new Encoder(5, 6);
-        mBackShooterEncoder = new Encoder(7, 8);
+        mFrontShooterEncoder = new Encoder(1, 5, 1, 6);
+        mBackShooterEncoder = new Encoder(1, 7, 1, 8);
         
-        mRaiserUp = new Solenoid(1);
-        mRaiserDown = new Solenoid(2);
+        mRaiserUp = new Solenoid(1, 1);
+        mRaiserDown = new Solenoid(1, 2);
         
         reinit();
         
@@ -44,8 +45,8 @@ public class Shooter {
     }
     
     public void setPower(double front, double back) {
-        mFrontMotor.set(front);
-        mBackMotor.set(back);
+        mFrontMotor.set(-front);
+        mBackMotor.set(-back);
     }
     
     public double getFrontSpeed() {

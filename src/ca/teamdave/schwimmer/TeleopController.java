@@ -53,15 +53,15 @@ public class TeleopController {
         // Shooter Speed
         if (op.isShooterButtonDown()) {
             shot.setPower(
-                    Const.getInstance().getDouble("shooter_front_ff", 0.9),
-                    Const.getInstance().getDouble("shoorter_back_ff", 0.9));
+                    Const.getInstance().getDouble("shooter_front_ff", 1.0),
+                    Const.getInstance().getDouble("shooter_back_ff", 1.0));
         } else {
             shot.setPower(0, 0);
         }
         // Shooter raiser
         if (op.isShooterHighButtonDown()) {
             shot.setRaiser(true);
-        } else if (op.isShooterLowButtonDown()){
+        } else if (op.isShooterLowButtonDown()) {
             shot.setRaiser(false);
         }
         

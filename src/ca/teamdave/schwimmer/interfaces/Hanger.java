@@ -15,12 +15,13 @@ public class Hanger {
     private final Solenoid mDown;
     
     public Hanger() {
-        mUp = new Solenoid(1, 3);
-        mDown = new Solenoid(1, 4);
+        System.out.println("making Hanger");
+        mUp = new Solenoid(1, 4);
+        mDown = new Solenoid(1, 3);
         set(false);
     }
     
-    public void set(boolean up) {
+    final public void set(boolean up) {
         mUp.set(up);
         mDown.set(!up);
     }

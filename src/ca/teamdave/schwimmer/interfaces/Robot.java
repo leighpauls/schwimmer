@@ -8,6 +8,7 @@ package ca.teamdave.schwimmer.interfaces;
 import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
 import com.sun.squawk.util.MathUtils;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -28,6 +29,7 @@ public class Robot {
     private final Hopper mHopper;
     private final Feeder mFeeder;
     private final Hanger mHanger;
+    private final Compressor mCompressor;
     
    
     public Robot() {
@@ -38,6 +40,8 @@ public class Robot {
         mHopper = new Hopper();
         mFeeder = new Feeder(mHopper);
         mHanger = new Hanger();
+        
+        mCompressor = new Compressor(14, 1);
         
         reinit();
     }
@@ -73,6 +77,7 @@ public class Robot {
     final public void reinit(DaveVector newPosition, double newHeading) {
         mDrive.reinit();
         mShooter.reinit();
+        mCompressor.start();
     }
     
     public void periodicUpdate(String autoName) {

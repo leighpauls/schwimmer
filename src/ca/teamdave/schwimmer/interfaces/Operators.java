@@ -16,6 +16,7 @@ public class Operators {
     private final Joystick mDriver;
     
     public Operators() {
+        System.out.println("making operators");
         mDriver = new Joystick(1);
     }
     

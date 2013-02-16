@@ -18,7 +18,8 @@ public class Feeder {
     private final Hopper mHopper;
     
     public Feeder(Hopper hopper) {
-        mIntakeMotor = new Victor(7);
+        System.out.println("making Feeder");
+        mIntakeMotor = new Victor(1, 7);
         mRaiserUp = new Solenoid(1, 7);
         mRaiserDown = new Solenoid(1, 8);
         mHopper = hopper;
@@ -27,12 +28,12 @@ public class Feeder {
     }
     
     final public void activateFeeder(boolean on) {
-        if (on && !mHopper.isSafeToIntake()) {
+        /*if (on && !mHopper.isSafeToIntake()) {
             System.out.println("Tried to run intake with hopper up");
             on = false;
-        }
+        }*/
         
-        mIntakeMotor.set(on ? 1.0 : 0.0);
+        mIntakeMotor.set((on ? -1.0 : 0.0));
         mRaiserDown.set(on);
         mRaiserUp.set(!on);
     }

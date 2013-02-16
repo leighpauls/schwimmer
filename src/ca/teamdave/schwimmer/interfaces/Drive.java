@@ -7,6 +7,7 @@ package ca.teamdave.schwimmer.interfaces;
 import ca.teamdave.schwimmer.util.DaveVector;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 
@@ -37,18 +38,18 @@ public class Drive {
     private final Solenoid mShifterLow;
 
     public Drive() {
-        mLeftFrontMotor = new Victor(1);
-        mLeftBackMotor = new Victor(2);
+        System.out.println("making Drive");
+        mLeftFrontMotor = new Victor(1, 1);
+        mLeftBackMotor = new Victor(1, 2);
         
-        mRightFrontMotor = new Victor(3);
-        mRightBackMotor = new Victor(4);
+        mRightFrontMotor = new Victor(1, 3);
+        mRightBackMotor = new Victor(1, 4);
         
-        mShifterHigh = new Solenoid(2, 1);
-        mShifterLow = new Solenoid(2, 2);
+        mShifterHigh = new Solenoid(2, 3);
+        mShifterLow = new Solenoid(2, 4);
         
-        mLeftEncoder = new Encoder(1, 2);
-        mRightEncoder = new Encoder(3, 4);
-        
+        mLeftEncoder = new Encoder(1, 1, 1, 2);
+        mRightEncoder = new Encoder(1, 3, 1, 4);
         mGyro = new Gyro(1);
         mGyro.setSensitivity(0.0125 * 200.0 / 360.0);
         
@@ -97,9 +98,8 @@ public class Drive {
     }
     
     public void setDrive(double x, double y) {
-        double left = y + x;
-        double right = -y + x;
-        
+        double left = -y - x;
+        double right = y - x;
         mLeftFrontMotor.set(left);
         mLeftBackMotor.set(left);
         mRightFrontMotor.set(right);

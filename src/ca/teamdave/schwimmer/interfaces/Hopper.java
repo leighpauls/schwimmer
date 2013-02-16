@@ -18,8 +18,9 @@ public class Hopper {
     private boolean mIsRaiserUp;
     
     public Hopper() {
-        mRaiserUp = new Solenoid(1, 5);
-        mRaiserDown = new Solenoid(1, 6);
+        System.out.println("making Hopper");
+        mRaiserUp = new Solenoid(1, 6);
+        mRaiserDown = new Solenoid(1, 5);
         
         mPunchExtend = new Solenoid(2, 1);
         mPunchRetract = new Solenoid(2, 2);
