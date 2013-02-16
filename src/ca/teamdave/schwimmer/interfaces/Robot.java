@@ -7,15 +7,8 @@ package ca.teamdave.schwimmer.interfaces;
 
 import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Victor;
 
 /**
  *
@@ -80,24 +73,33 @@ public class Robot {
         mCompressor.start();
     }
     
+    int cyclesToUpdate = 0;
+    
     public void periodicUpdate(String autoName) {
-        mDrive.periodicUpdate(autoName);
+        mDrive.periodicUpdate();
+        mShooter.periodicUpdate();
+        
+        if (cyclesToUpdate <= 0) {
+            cyclesToUpdate = 10;
+        } else {
+            cyclesToUpdate--;
+            return;
+        }
         
         DaveVector pos = mDrive.getPosition();
         
+        
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1,
+                1,
+                "B: " + DaveUtil.toAccuracy(mShooter.getBackSpeed(), 0) + 
+                " F: " + DaveUtil.toAccuracy(mShooter.getFrontSpeed(), 0) + "          ");
+        
         DriverStationLCD.getInstance().println(
-                DriverStationLCD.Line.kUser1, 
+                DriverStationLCD.Line.kUser2, 
                 1, 
                 "X: " + DaveUtil.toAccuracy(pos.getX(), 3)
                 + " Y: " + DaveUtil.toAccuracy(pos.getY(), 3));
-        DriverStationLCD.getInstance().println(
-                DriverStationLCD.Line.kUser2,
-                1,
-                "L: " + DaveUtil.toAccuracy(mDrive.getEncoderLeft(), 3) + "       ");
-        DriverStationLCD.getInstance().println(
-                DriverStationLCD.Line.kUser3,
-                1, 
-                "R: " + DaveUtil.toAccuracy(mDrive.getEncoderRight(), 3) + "    ");
+
         DriverStationLCD.getInstance().println(
                 DriverStationLCD.Line.kUser4,
                 1, 

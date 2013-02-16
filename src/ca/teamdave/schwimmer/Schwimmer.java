@@ -14,6 +14,7 @@ import ca.teamdave.schwimmer.automodes.AutoModeSelector;
 import ca.teamdave.schwimmer.control.controlunits.BaseLock;
 import ca.teamdave.schwimmer.util.Const;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Watchdog;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,6 +34,7 @@ public class Schwimmer extends IterativeRobot {
     
    
     public void robotInit() {
+        Watchdog.getInstance().setEnabled(false);
         Const.getInstance().reloadConstants();
         mRobot = new Robot();
         mAuto = null;

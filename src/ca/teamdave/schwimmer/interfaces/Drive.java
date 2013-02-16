@@ -78,7 +78,7 @@ public class Drive {
         mLastEncoderAverage = 0.0;
     }
     
-    public void periodicUpdate(String autoName) {
+    public void periodicUpdate() {
         double curEncoderAverage = getEncoderAverage();
         double distTraveled = curEncoderAverage - mLastEncoderAverage;
         mLastEncoderAverage = curEncoderAverage;

@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer.util;
 
 import ca.teamdave.schwimmer.control.HighStaticPWD;
 import ca.teamdave.schwimmer.control.LinearPID;
+import ca.teamdave.schwimmer.control.LinearPIDFF;
 import com.sun.squawk.util.LineReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -178,4 +179,21 @@ public class Const {
                 getDouble(namePrefix + "_d", defaultD),
                 getDouble(namePrefix + "_error", defaultError));
     }
+    
+    public LinearPIDFF pidFFFromConst(
+            String namePrefix,
+            double defaultP,
+            double defaultI,
+            double defaultD,
+            double defaultError,
+            double defaultFF) {
+        return new LinearPIDFF(
+                getDouble(namePrefix + "_p", defaultP),
+                getDouble(namePrefix + "_i", defaultI),
+                getDouble(namePrefix + "_d", defaultD),
+                getDouble(namePrefix + "_error", defaultError),
+                getDouble(namePrefix + "_ff", defaultFF));
+    }
+    
+    
 }

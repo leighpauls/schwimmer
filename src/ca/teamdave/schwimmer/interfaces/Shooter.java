@@ -21,14 +21,16 @@ public class Shooter {
     private final Encoder mBackShooterEncoder;
     private final Solenoid mRaiserUp;
     private final Solenoid mRaiserDown;
+    private double mFrontLowPass;
+    private double mBackLowPass;
     
     public Shooter() {
         System.out.println("making Shooter");
         mFrontMotor = new Victor(1, 5);
         mBackMotor = new Victor(1, 6);
         
-        mFrontShooterEncoder = new Encoder(1, 5, 1, 6);
-        mBackShooterEncoder = new Encoder(1, 7, 1, 8);
+        mFrontShooterEncoder = new Encoder(1, 7, 1, 8, true, Encoder.EncodingType.k1X);
+        mBackShooterEncoder = new Encoder(1, 5, 1, 6, true, Encoder.EncodingType.k1X);
         
         mRaiserUp = new Solenoid(1, 1);
         mRaiserDown = new Solenoid(1, 2);
@@ -42,6 +44,18 @@ public class Shooter {
         mFrontShooterEncoder.start();
         mBackShooterEncoder.reset();
         mBackShooterEncoder.start();
+        
+        mFrontLowPass = 0.0;
+        mBackLowPass = 0.0;
+    }
+    
+    final static double kLowPassContribution = 0.1;
+    
+    public void periodicUpdate() {
+        mFrontLowPass = mFrontLowPass * (1-kLowPassContribution)
+                + mFrontShooterEncoder.getRate() * kLowPassContribution;
+        mBackLowPass = mBackLowPass * (1-kLowPassContribution)
+                + mBackShooterEncoder.getRate() * kLowPassContribution;
     }
     
     public void setPower(double front, double back) {
@@ -50,10 +64,10 @@ public class Shooter {
     }
     
     public double getFrontSpeed() {
-        return mFrontShooterEncoder.getRate();
+        return mFrontLowPass;
     }
     public double getBackSpeed() {
-        return mBackShooterEncoder.getRate();
+        return mBackLowPass;
     }
     
     public void setRaiser(boolean up) {

@@ -6,6 +6,8 @@ package ca.teamdave.schwimmer.control.controlunits;
 
 import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.LinearPID;
+import ca.teamdave.schwimmer.control.LinearPIDFF;
+import ca.teamdave.schwimmer.interfaces.Shooter;
 import ca.teamdave.schwimmer.util.Const;
 
 /**
@@ -13,18 +15,18 @@ import ca.teamdave.schwimmer.util.Const;
  * @author leighpauls
  */
 public class ShotControl {
-    private final LinearPID mFrontControl;
-    private final LinearPID mBackControl;
+    private final LinearPIDFF mFrontControl;
+    private final LinearPIDFF mBackControl;
     private boolean mEngaged;
 
 
     public ShotControl() {
-        mFrontControl = Const.getInstance().pidFromConst(
+        mFrontControl = Const.getInstance().pidFFFromConst(
                 "shooter_front",
-                0.001, 0.0, 0.0, 10);
-        mBackControl = Const.getInstance().pidFromConst(
+                0.00005, 0.000000001, 0.0, 10, 0.000035);
+        mBackControl = Const.getInstance().pidFFFromConst(
                 "shooter_back",
-                0.001, 0.0, 0.0, 10);
+                0.001, 0.0, 0.0, 10, 0.0001);
 
         mEngaged = false;
     }
@@ -34,10 +36,10 @@ public class ShotControl {
         // the gear ratios to convert to proper pairs (3:1)
         mFrontControl.setSetPoint(
                 Const.getInstance().getDouble(
-                "shooter_front_speed", 600));
+                "shooter_front_speed", 18000));
         mBackControl.setSetPoint(
                 Const.getInstance().getDouble(
-                "shooter_back_speed", 200));
+                "shooter_back_speed", 10000));
         mEngaged = true;
     }
     
@@ -50,17 +52,16 @@ public class ShotControl {
         return mEngaged;
     }
     
-    public boolean doCycle(Robot robot) {
+    public boolean doCycle(Shooter shot) {
         if (mEngaged) {
-            robot.getShooter().setPower(
-                    mFrontControl.computeCycle(robot.getShooter().getFrontSpeed()),
-                    mBackControl.computeCycle(robot.getShooter().getBackSpeed()));
+            shot.setPower(
+                    mFrontControl.computeCycle(shot.getFrontSpeed()),
+                    mBackControl.computeCycle(shot.getBackSpeed()));
             return mFrontControl.isDone() && mBackControl.isDone();
         } else {
-            robot.getShooter().setPower(0.0, 0.0);
+            shot.setPower(0.0, 0.0);
             return false;
         }
-                
     }
     
 }

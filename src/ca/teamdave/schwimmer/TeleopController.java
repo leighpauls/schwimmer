@@ -48,16 +48,20 @@ public class TeleopController {
                     op.getDriverX(),
                     op.getDriverY());            
         }
-        
+
         Shooter shot = robot.getShooter();
-        // Shooter Speed
         if (op.isShooterButtonDown()) {
-            shot.setPower(
-                    Const.getInstance().getDouble("shooter_front_ff", 1.0),
-                    Const.getInstance().getDouble("shooter_back_ff", 1.0));
+            if (!mShooter.isEngaged()){
+                mShooter.engage();
+            }
         } else {
-            shot.setPower(0, 0);
+            if (mShooter.isEngaged()){
+                mShooter.disengage();
+            }
         }
+        mShooter.doCycle(shot);
+        
+
         // Shooter raiser
         if (op.isShooterHighButtonDown()) {
             shot.setRaiser(true);
