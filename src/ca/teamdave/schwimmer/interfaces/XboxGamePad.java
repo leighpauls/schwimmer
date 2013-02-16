@@ -4,6 +4,7 @@
  */
 package ca.teamdave.schwimmer.interfaces;
 
+import ca.teamdave.schwimmer.util.DaveUtil;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -17,25 +18,29 @@ public class XboxGamePad {
         mPad = new Joystick(port);
     }
     
+    private static double deadband(double jsValue) {
+        return (Math.abs(jsValue) < 0.15) ? 0.0 : (jsValue * jsValue * DaveUtil.sign(jsValue));
+    }
+    
     public double getXLeft() {
-        return mPad.getRawAxis(1);
+        return deadband(mPad.getRawAxis(1));
     }
     public double getYLeft() {
-        return mPad.getRawAxis(2);
+        return deadband(mPad.getRawAxis(2));
     }
     /**
      * More positive is more left
      * @return 
      */
     public double getTriggerDifference() {
-        return mPad.getRawAxis(3);
+        return deadband(mPad.getRawAxis(3));
     }
     
     public double getXRight() {
-        return mPad.getRawAxis(4);
+        return deadband(mPad.getRawAxis(4));
     }
     public double getYRight() {
-        return mPad.getRawAxis(5);
+        return deadband(mPad.getRawAxis(5));
     }
     
     public boolean getAButton() {
