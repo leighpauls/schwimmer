@@ -13,11 +13,13 @@ import edu.wpi.first.wpilibj.Joystick;
  * @author leighpauls
  */
 public class Operators {
-    private final Joystick mDriver;
+    private final XboxGamePad mDriver;
+    private final Joystick mOperator;
     
     public Operators() {
         System.out.println("making operators");
-        mDriver = new Joystick(1);
+        mDriver = new XboxGamePad(1);
+        mOperator = new Joystick(2);
     }
     
     private double filterJoystick(double raw) {
@@ -26,49 +28,59 @@ public class Operators {
 
     
     public double getDriverX() {
-        return filterJoystick(mDriver.getX(GenericHID.Hand.kLeft));
+        return mDriver.getXLeft();
     }
 
     public double getDriverY() {
-        return filterJoystick(-mDriver.getY(GenericHID.Hand.kLeft));
+        return -mDriver.getYLeft();
     }
 
     public boolean isAutonSelectButtonDown() {
-        return mDriver.getRawButton(1);
+        return mDriver.getAButton();
     }
 
     public boolean isBaseLockButtonDown() {
-        return mDriver.getRawButton(2);
+        return mDriver.getBButton();
+    }
+    
+    // drop/run intake
+    public boolean isIntakeButtonDown() {
+        return mDriver.getRightBumper();
+    }
+    public boolean isReverseIntakeButtonDown() {
+        return mDriver.getLeftBumper();
+    }
+
+    public boolean isHangerUpButton() {
+        return mDriver.getYButton();
+    }
+    public boolean isHangerDownButton() {
+        return mDriver.getXButton();
     }
     
     public boolean isShooterButtonDown() {
-        return mDriver.getRawButton(8);
+        return mOperator.getRawButton(8);
     }
-
-    // drop/run intake
-    public boolean isIntakeButtonDown() {
-        return mDriver.getRawButton(3);
-    }
-
+    
     // hopper up/down
     public boolean isHopperLowButtonDown() {
-        return mDriver.getRawButton(7);
+        return mOperator.getRawButton(7);
     }
     public boolean isHopperHighButtonDown() {
-        return mDriver.getRawButton(5);
+        return mOperator.getRawButton(5);
     }
     
     // punch in/out
     public boolean isPunchButtonDown() {
-        return mDriver.getRawButton(6);
+        return mOperator.getRawButton(6);
     }
             
     
     // shooter up/down
     public boolean isShooterLowButtonDown() {
-        return mDriver.getRawButton(1);
+        return mOperator.getRawButton(1);
     }
     public boolean isShooterHighButtonDown() {
-        return mDriver.getRawButton(4);
+        return mOperator.getRawButton(4);
     }
 }

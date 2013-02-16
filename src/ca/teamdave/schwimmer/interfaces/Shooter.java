@@ -32,8 +32,8 @@ public class Shooter {
         mFrontShooterEncoder = new Encoder(1, 7, 1, 8, true, Encoder.EncodingType.k1X);
         mBackShooterEncoder = new Encoder(1, 5, 1, 6, true, Encoder.EncodingType.k1X);
         
-        mRaiserUp = new Solenoid(1, 1);
-        mRaiserDown = new Solenoid(1, 2);
+        mRaiserUp = new Solenoid(1, 2);
+        mRaiserDown = new Solenoid(1, 1);
         
         reinit();
         

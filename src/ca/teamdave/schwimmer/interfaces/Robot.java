@@ -9,6 +9,8 @@ import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  *
@@ -23,7 +25,6 @@ public class Robot {
     private final Feeder mFeeder;
     private final Hanger mHanger;
     private final Compressor mCompressor;
-    
    
     public Robot() {
         
