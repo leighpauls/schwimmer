@@ -26,7 +26,7 @@ public class ShotControl {
                 0.00005, 0.000000001, 0.0, 10, 0.000035);
         mBackControl = Const.getInstance().pidFFFromConst(
                 "shooter_back",
-                0.001, 0.0, 0.0, 10, 0.0001);
+                0.0007, 0.000000001, 0.0, 10, 0.0001);
 
         mEngaged = false;
     }
@@ -36,7 +36,7 @@ public class ShotControl {
         // the gear ratios to convert to proper pairs (3:1)
         mFrontControl.setSetPoint(
                 Const.getInstance().getDouble(
-                "shooter_front_speed", 18000));
+                "shooter_front_speed", 22000));
         mBackControl.setSetPoint(
                 Const.getInstance().getDouble(
                 "shooter_back_speed", 10000));
