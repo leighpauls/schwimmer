@@ -81,6 +81,19 @@ public class TeleopController {
         hop.setPunch(op.isPunchButtonDown());
         
         // Feeder
-        robot.getFeeder().activateFeeder(op.isIntakeButtonDown());
+        if (op.isIntakeButtonDown()) {
+            robot.getFeeder().activateFeeder(true, false);
+        } else if (op.isReverseIntakeButtonDown()) {
+            robot.getFeeder().activateFeeder(true, true);
+        } else {
+            robot.getFeeder().activateFeeder(false, false);
+        }
+        
+        // hanging
+        if (op.isHangerDownButton()) {
+            robot.getHanger().set(false);
+        } else if (op.isHangerUpButton()) {
+            robot.getHanger().set(true);
+        }
     }
 }

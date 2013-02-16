@@ -24,17 +24,18 @@ public class Feeder {
         mRaiserDown = new Solenoid(1, 8);
         mHopper = hopper;
         
-        activateFeeder(false);
+        activateFeeder(false, false);
     }
     
-    final public void activateFeeder(boolean on) {
-        /*if (on && !mHopper.isSafeToIntake()) {
+    final public void activateFeeder(boolean on, boolean reverse) {
+        if (on && (!reverse) && (!mHopper.isSafeToIntake())) {
             System.out.println("Tried to run intake with hopper up");
             on = false;
-        }*/
+        }
         
-        mIntakeMotor.set((on ? -1.0 : 0.0));
+        mIntakeMotor.set((on ? (reverse ? 1.0 : -1.0) : 0.0));
         mRaiserDown.set(on);
         mRaiserUp.set(!on);
     }
+    
 }
