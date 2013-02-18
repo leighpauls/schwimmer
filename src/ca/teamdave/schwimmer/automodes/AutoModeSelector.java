@@ -9,6 +9,7 @@ import ca.teamdave.schwimmer.automodes.test.TestDriveLine;
 import ca.teamdave.schwimmer.automodes.test.TestDriveToEncoder;
 import ca.teamdave.schwimmer.automodes.test.TestTurn;
 import ca.teamdave.schwimmer.command.Command;
+import ca.teamdave.schwimmer.command.meta.Endless;
 
 /**
  *
@@ -22,7 +23,17 @@ public class AutoModeSelector {
             new Dummy7Disk(),
             new TestDriveLine(),
             new TestTurn(),
-            new TestDriveToEncoder()
+            new TestDriveToEncoder(),
+            new AutoModeDescriptor() {
+
+                public Command getTopLevelCommand() {
+                    return new Endless();
+                }
+
+                public String getVisibleName() {
+                    return "Nothing";
+                }
+            }
         };
     }
     

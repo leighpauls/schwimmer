@@ -29,8 +29,8 @@ public class Shooter {
         mFrontMotor = new Victor(1, 5);
         mBackMotor = new Victor(1, 6);
         
-        mFrontShooterEncoder = new Encoder(1, 7, 1, 8, true, Encoder.EncodingType.k1X);
-        mBackShooterEncoder = new Encoder(1, 5, 1, 6, true, Encoder.EncodingType.k1X);
+        mFrontShooterEncoder = new Encoder(1, 5, 1, 6, true, Encoder.EncodingType.k1X);
+        mBackShooterEncoder = new Encoder(1, 7, 1, 8, true, Encoder.EncodingType.k1X);
         
         mRaiserUp = new Solenoid(1, 2);
         mRaiserDown = new Solenoid(1, 1);

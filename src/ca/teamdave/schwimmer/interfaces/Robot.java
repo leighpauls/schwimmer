@@ -99,8 +99,13 @@ public class Robot {
                 DriverStationLCD.Line.kUser2, 
                 1, 
                 "X: " + DaveUtil.toAccuracy(pos.getX(), 3)
-                + " Y: " + DaveUtil.toAccuracy(pos.getY(), 3));
+                + " Y: " + DaveUtil.toAccuracy(pos.getY(), 3) + "             ");
 
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3,
+                1,
+                "L :" + DaveUtil.toAccuracy(mDrive.getEncoderLeft(), 4) +
+                " R: " + DaveUtil.toAccuracy(mDrive.getEncoderRight(), 4) + "             ");
+        
         DriverStationLCD.getInstance().println(
                 DriverStationLCD.Line.kUser4,
                 1, 
