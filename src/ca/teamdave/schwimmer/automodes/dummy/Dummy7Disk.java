@@ -35,6 +35,8 @@ public class Dummy7Disk extends AutoModeDescriptor {
                 "dummy_7_disk_side_meters", 1.5);
         double straightPower = Const.getInstance().getDouble(
                 "dummy_7_disk_power", 0.5);
+        double finalAngle = Const.getInstance().getDouble(
+                "dummy_7_disk_final_angle", 390);
 
         // TODO: Put the flywheel on and keep it on
 
@@ -92,7 +94,7 @@ public class Dummy7Disk extends AutoModeDescriptor {
                 DaveVector.fromXY(1.0, 0.0),
                 sidePathDist, straightPower);
 
-        Command finalCorner = new TurnToHeading(360);
+        Command finalCorner = new TurnToHeading(finalAngle);
 
         Command finalShots = new Series(new Command[]{
                     new DummyShootDisk(),

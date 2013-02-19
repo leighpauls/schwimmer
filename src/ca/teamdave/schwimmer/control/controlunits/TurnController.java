@@ -16,6 +16,7 @@ public class TurnController {
     private final HighStaticPWD mController;
     private double mForwardPower;
     private double mDestAngle;
+    private double mFFTurnPower;
     
     
     public TurnController() {
@@ -23,6 +24,7 @@ public class TurnController {
                 "turn_controller", 0.02, 0.01, 0.1, 2.0);
         mDestAngle = 0.0;
         mForwardPower = 0.0;
+        mFFTurnPower = 0.0;
     }
     
     public void setDestAngle(double newAngle) {
@@ -31,6 +33,10 @@ public class TurnController {
     
     public void setForwardPower(double forwardPower) {
         mForwardPower = forwardPower;
+    }
+    
+    public void setFFTurnPower(double ffTurnPower) {
+        mFFTurnPower = ffTurnPower;
     }
     
     /**
@@ -48,7 +54,7 @@ public class TurnController {
         
         mController.setSetPoint(destAngle, true);
         
-        robot.getDrive().setDrive(-mController.computeCycle(robot.getDrive().getHeading()), mForwardPower);
+        robot.getDrive().setDrive(-mFFTurnPower - mController.computeCycle(robot.getDrive().getHeading()), mForwardPower);
         return mController.isDone();
     }
 

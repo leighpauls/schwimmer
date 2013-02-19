@@ -16,7 +16,11 @@ import edu.wpi.first.wpilibj.Victor;
  * @author leighpauls
  */
 public class Drive {
-    static private final double K_METERS_PER_ENCODER_TICK = 1.0 / 2696.0;
+    // practice???
+    // static private final double K_METERS_PER_ENCODER_TICK = 1.0 / 2696.0;
+    
+    // comp
+    static private final double K_METERS_PER_ENCODER_TICK = (1.0 / 2696.0) / 1.86;
     
     // Robot actuators
     private final Victor mLeftFrontMotor;

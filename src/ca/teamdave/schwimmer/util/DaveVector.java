@@ -74,5 +74,16 @@ public class DaveVector {
         double angle = hypotenuse.getFieldAngle() - direction.getFieldAngle();
         return hypotenuse.getMagnitude() * Math.sin(angle * Math.PI / 180.0);
     }
+    
+    public DaveVector add(DaveVector other) {
+        return DaveVector.fromXY(mX + other.mX, mY + other.mY);
+    }
 
+    public DaveVector multiply(double factor) {
+        return DaveVector.fromXY(mX * factor, mY * factor);
+    }
+    
+    public DaveVector vectorTo(DaveVector to) {
+        return DaveVector.fromXY(to.mX - mX, to.mY - mY);
+    }
 }

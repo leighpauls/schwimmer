@@ -78,7 +78,7 @@ public class Schwimmer extends IterativeRobot {
             
     
     public void disabledInit() {
-        Const.getInstance().dumpEffectiveTable();
+        // Const.getInstance().dumpEffectiveTable();
     }
     
     public void disabledPeriodic() {

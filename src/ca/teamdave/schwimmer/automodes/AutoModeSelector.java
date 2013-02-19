@@ -5,6 +5,7 @@
 package ca.teamdave.schwimmer.automodes;
 
 import ca.teamdave.schwimmer.automodes.dummy.Dummy7Disk;
+import ca.teamdave.schwimmer.automodes.test.TestArc;
 import ca.teamdave.schwimmer.automodes.test.TestDriveLine;
 import ca.teamdave.schwimmer.automodes.test.TestDriveToEncoder;
 import ca.teamdave.schwimmer.automodes.test.TestTurn;
@@ -24,12 +25,12 @@ public class AutoModeSelector {
             new TestDriveLine(),
             new TestTurn(),
             new TestDriveToEncoder(),
+            new TestArc(),
             new AutoModeDescriptor() {
-
+                // Nothing command for safety
                 public Command getTopLevelCommand() {
                     return new Endless();
                 }
-
                 public String getVisibleName() {
                     return "Nothing";
                 }
@@ -38,7 +39,7 @@ public class AutoModeSelector {
     }
     
     public AutoModeDescriptor getDefault() {
-        return mModeList[3];
+        return mModeList[4];
     }
     
     public AutoModeDescriptor selectFromAnalogRange(double analogInput) {
