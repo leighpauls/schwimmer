@@ -86,4 +86,8 @@ public class DaveVector {
     public DaveVector vectorTo(DaveVector to) {
         return DaveVector.fromXY(to.mX - mX, to.mY - mY);
     }
+    
+    public String toString() {
+        return "Vector X: " + mX + ", Y: " + mY;
+    }
 }

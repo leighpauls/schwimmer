@@ -83,4 +83,11 @@ public class Operators {
     public boolean isShooterHighButtonDown() {
         return mOperator.getRawButton(4);
     }
+    
+    public boolean isShiftUp() {
+        return mDriver.getTriggerDifference() > 0.5;
+    }
+    public boolean isShiftDown() {
+        return mDriver.getTriggerDifference() < -0.5;
+    }
 }

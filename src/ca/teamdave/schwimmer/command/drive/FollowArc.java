@@ -23,7 +23,7 @@ public class FollowArc implements Command {
     private final TurnController mTurnController;
     private final double mBendRadius;
     private final LinearPID mDirectionController;
-    private final DaveVector mFromOrigin;
+    private final DaveVector mToOrigin;
     private boolean mDone;
     
     /**
@@ -39,9 +39,8 @@ public class FollowArc implements Command {
             double bendRadius,
             double arcLength,
             double forwardPower) {
-
         mTurnCentroid = origin.add(DaveVector.fromFieldRadial(bendRadius, startDirection.getFieldAngle() + 90));
-        mFromOrigin = mTurnCentroid.vectorTo(origin);
+        mToOrigin = mTurnCentroid.vectorTo(origin);
         
         mDestThetaDegrees = arcLength / bendRadius * 180 / Math.PI;
         mBendRadius = bendRadius;
@@ -59,6 +58,17 @@ public class FollowArc implements Command {
         mTurnController.setFFTurnPower(arcHardnessFF / bendRadius);
         
         mDone = false;
+    }
+    
+    public DaveVector getEndPoint() {
+        return mTurnCentroid.add(
+                DaveVector.fromFieldRadial(
+                Math.abs(mBendRadius),
+                mToOrigin.getFieldAngle() + mDestThetaDegrees));
+    }
+    
+    public DaveVector getEndDirection() {
+        return DaveVector.fromFieldRadial(1.0, mToOrigin.getFieldAngle() + mDestThetaDegrees + (mBendRadius > 0 ? 90 : -90));
     }
     
     public void runCommandStep(Robot robot) {
@@ -84,7 +94,7 @@ public class FollowArc implements Command {
         mTurnController.setDestAngle(destAngle);
         mTurnController.doCycle(robot);
         
-        double curTheta = Math.abs(fromCentroid.getFieldAngle() - mFromOrigin.getFieldAngle());
+        double curTheta = Math.abs(fromCentroid.getFieldAngle() - mToOrigin.getFieldAngle());
         if (curTheta > mDestThetaDegrees) {
             mDone = true;
         } else {

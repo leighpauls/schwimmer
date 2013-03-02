@@ -16,8 +16,8 @@ public class Hanger {
     
     public Hanger() {
         System.out.println("making Hanger");
-        mUp = new Solenoid(1, 4);
-        mDown = new Solenoid(1, 3);
+        mUp = new Solenoid(1, 3);
+        mDown = new Solenoid(1, 4);
         set(false);
     }
     

@@ -195,5 +195,12 @@ public class Const {
                 getDouble(namePrefix + "_ff", defaultFF));
     }
     
-    
+    public DaveVector vectorFromConst(
+            String namePrefix,
+            double defaultX,
+            double defaultY) {
+        return DaveVector.fromXY(
+                getDouble(namePrefix + "_x", defaultX),
+                getDouble(namePrefix + "_y", defaultY));
+    }
 }

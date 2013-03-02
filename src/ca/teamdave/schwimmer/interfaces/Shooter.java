@@ -4,6 +4,7 @@
  */
 package ca.teamdave.schwimmer.interfaces;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -23,17 +24,20 @@ public class Shooter {
     private final Solenoid mRaiserDown;
     private double mFrontLowPass;
     private double mBackLowPass;
+    private final Compressor mCompressor;
     
-    public Shooter() {
+    public Shooter(Compressor compressor) {
         System.out.println("making Shooter");
-        mFrontMotor = new Victor(1, 5);
-        mBackMotor = new Victor(1, 6);
+        mFrontMotor = new Victor(1, 6);
+        mBackMotor = new Victor(1, 7);
         
         mFrontShooterEncoder = new Encoder(1, 5, 1, 6, true, Encoder.EncodingType.k1X);
         mBackShooterEncoder = new Encoder(1, 7, 1, 8, true, Encoder.EncodingType.k1X);
         
-        mRaiserUp = new Solenoid(1, 2);
-        mRaiserDown = new Solenoid(1, 1);
+        mRaiserUp = new Solenoid(1, 1);
+        mRaiserDown = new Solenoid(1, 2);
+        
+        mCompressor = compressor;
         
         reinit();
         
@@ -47,6 +51,8 @@ public class Shooter {
         
         mFrontLowPass = 0.0;
         mBackLowPass = 0.0;
+        
+        mCompressor.start();
     }
     
     final static double kLowPassContribution = 0.1;
@@ -58,9 +64,15 @@ public class Shooter {
                 + mBackShooterEncoder.getRate() * kLowPassContribution;
     }
     
-    public void setPower(double front, double back) {
+    public void setPower(double front, double back, boolean engaged) {
         mFrontMotor.set(-front);
         mBackMotor.set(-back);
+        
+        if (engaged){
+            mCompressor.stop();
+        } else {
+            mCompressor.start();
+        }
     }
     
     public double getFrontSpeed() {

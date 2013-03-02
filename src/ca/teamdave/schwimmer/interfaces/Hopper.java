@@ -19,11 +19,11 @@ public class Hopper {
     
     public Hopper() {
         System.out.println("making Hopper");
-        mRaiserUp = new Solenoid(1, 6);
-        mRaiserDown = new Solenoid(1, 5);
+        mRaiserUp = new Solenoid(1, 5);
+        mRaiserDown = new Solenoid(1, 6);
         
-        mPunchExtend = new Solenoid(2, 1);
-        mPunchRetract = new Solenoid(2, 2);
+        mPunchExtend = new Solenoid(2, 2);
+        mPunchRetract = new Solenoid(2, 1);
         
         setRaiser(true);
         setPunch(false);

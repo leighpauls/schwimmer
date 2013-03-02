@@ -95,5 +95,12 @@ public class TeleopController {
         } else if (op.isHangerUpButton()) {
             robot.getHanger().set(true);
         }
+        
+        // shifting
+        if (op.isShiftUp()) {
+            robot.getDrive().setShifter(true);
+        } else if (op.isShiftDown()) {
+            robot.getDrive().setShifter(false);
+        }
     }
 }

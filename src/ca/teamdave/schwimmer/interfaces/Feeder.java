@@ -19,7 +19,7 @@ public class Feeder {
     
     public Feeder(Hopper hopper) {
         System.out.println("making Feeder");
-        mIntakeMotor = new Victor(1, 7);
+        mIntakeMotor = new Victor(1, 5);
         mRaiserUp = new Solenoid(1, 7);
         mRaiserDown = new Solenoid(1, 8);
         mHopper = hopper;

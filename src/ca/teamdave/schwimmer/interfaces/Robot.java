@@ -27,15 +27,15 @@ public class Robot {
     private final Compressor mCompressor;
    
     public Robot() {
+
+        mCompressor = new Compressor(14, 1);
         
         mDrive = new Drive();
-        mShooter = new Shooter();
+        mShooter = new Shooter(mCompressor);
         mOperators = new Operators();
         mHopper = new Hopper();
         mFeeder = new Feeder(mHopper);
         mHanger = new Hanger();
-        
-        mCompressor = new Compressor(14, 1);
         
         reinit();
     }

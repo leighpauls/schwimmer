@@ -56,10 +56,11 @@ public class ShotControl {
         if (mEngaged) {
             shot.setPower(
                     mFrontControl.computeCycle(shot.getFrontSpeed()),
-                    mBackControl.computeCycle(shot.getBackSpeed()));
+                    mBackControl.computeCycle(shot.getBackSpeed()),
+                    true);
             return mFrontControl.isDone() && mBackControl.isDone();
         } else {
-            shot.setPower(0.0, 0.0);
+            shot.setPower(0.0, 0.0, false);
             return false;
         }
     }
