@@ -81,7 +81,7 @@ public class Const {
             }
             int equalBreak = curLine.indexOf("=");
             if (equalBreak < 0) {
-                System.err.print("Bad line format at line " + curLineNum);
+                System.err.println("Bad line format at line " + curLineNum);
                 continue;
             }
             String name = curLine.substring(0, equalBreak);

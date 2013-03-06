@@ -18,6 +18,7 @@ public class LinearPID {
     private double mLastError;
     private double mIntegration;
     private boolean mFirstCycle;
+    private double mCurError;
     
     public LinearPID(double p, double i, double d, double acceptableError) {
         setControlConstants(p, i, d, acceptableError);
@@ -25,6 +26,7 @@ public class LinearPID {
         mDone = false;
         mSetPoint = 0.0;
         mLastError = 0.0;
+        mCurError = 0.0;
     }
     
     public void setSetPoint(double newSetPoint) {
@@ -51,20 +53,20 @@ public class LinearPID {
     public double computeCycle(double curPosition) {
         double output = 0.0;
         
-        double error = curPosition - mSetPoint;
-        output -= mP * error;
+        mCurError = curPosition - mSetPoint;
+        output -= mP * mCurError;
         
         // integral
-        mIntegration += error;
+        mIntegration += mCurError;
         output -= mI * mIntegration;
         
-        double change = mFirstCycle ? 0.0 : (error - mLastError);
-        mLastError = error;
+        double change = mFirstCycle ? 0.0 : (mCurError - mLastError);
+        mLastError = mCurError;
         mFirstCycle = false;
         
         output -= mD * change;
         
-        mDone = Math.abs(error) < mAcceptableError;
+        mDone = Math.abs(mCurError) < mAcceptableError;
         
         return output;
     }
@@ -72,5 +74,8 @@ public class LinearPID {
     public boolean isDone() {
         return mDone;
     }
-    
+ 
+    public double getCurError() {
+        return mCurError;
+    }
 }

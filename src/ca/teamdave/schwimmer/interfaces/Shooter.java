@@ -68,7 +68,7 @@ public class Shooter {
         mFrontMotor.set(-front);
         mBackMotor.set(-back);
         
-        if (engaged){
+        if (engaged) {
             mCompressor.stop();
         } else {
             mCompressor.start();

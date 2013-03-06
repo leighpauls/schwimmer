@@ -7,6 +7,7 @@ package ca.teamdave.schwimmer;
 import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.controlunits.BaseLock;
 import ca.teamdave.schwimmer.control.controlunits.ShotControl;
+import ca.teamdave.schwimmer.interfaces.Feeder;
 import ca.teamdave.schwimmer.interfaces.Hopper;
 import ca.teamdave.schwimmer.interfaces.Operators;
 import ca.teamdave.schwimmer.interfaces.Shooter;
@@ -59,18 +60,16 @@ public class TeleopController {
                 mShooter.disengage();
             }
         }
-        mShooter.doCycle(shot);
+        Hopper hop = robot.getHopper();
+        mShooter.doCycle(shot, robot.getHopper(), op.isPunchButtonDown());
         
-
         // Shooter raiser
         if (op.isShooterHighButtonDown()) {
             shot.setRaiser(true);
         } else if (op.isShooterLowButtonDown()) {
             shot.setRaiser(false);
         }
-        
 
-        Hopper hop = robot.getHopper();
         // hopper raiser
         if (op.isHopperHighButtonDown()) {
             hop.setRaiser(true);
@@ -78,15 +77,17 @@ public class TeleopController {
             hop.setRaiser(false);
         }
         // hopper punch
-        hop.setPunch(op.isPunchButtonDown());
+        // hop.setPunch(op.isPunchButtonDown());
         
         // Feeder
         if (op.isIntakeButtonDown()) {
-            robot.getFeeder().activateFeeder(true, false);
+            double adjustment = op.getIntakeAdjustment();
+            robot.getFeeder().setFeederState(Feeder.STATE_IN, adjustment);
+            // System.out.println("Adjust: " + adjustment);
         } else if (op.isReverseIntakeButtonDown()) {
-            robot.getFeeder().activateFeeder(true, true);
+            robot.getFeeder().setFeederState(Feeder.STATE_SPIT);
         } else {
-            robot.getFeeder().activateFeeder(false, false);
+            robot.getFeeder().setFeederState(Feeder.STATE_UP);
         }
         
         // hanging

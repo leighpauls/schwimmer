@@ -4,6 +4,7 @@
  */
 package ca.teamdave.schwimmer.interfaces;
 
+import ca.teamdave.schwimmer.control.controlunits.ShotControl;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**
@@ -24,6 +25,7 @@ public class Hopper {
         
         mPunchExtend = new Solenoid(2, 2);
         mPunchRetract = new Solenoid(2, 1);
+
         
         setRaiser(true);
         setPunch(false);
@@ -36,6 +38,7 @@ public class Hopper {
         // TODO: add a timer delay on this state
         mIsRaiserUp = up;
     }
+    
     
     final public void setPunch(boolean extended) {
         if (!mIsRaiserUp && extended) {

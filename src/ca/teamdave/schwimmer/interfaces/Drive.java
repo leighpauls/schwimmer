@@ -51,7 +51,7 @@ public class Drive {
         
         mShifterHigh = new Solenoid(2, 3);
         mShifterLow = new Solenoid(2, 4);
-        
+
         mLeftEncoder = new Encoder(1, 1, 1, 2);
         mRightEncoder = new Encoder(1, 3, 1, 4);
         mGyro = new Gyro(1);

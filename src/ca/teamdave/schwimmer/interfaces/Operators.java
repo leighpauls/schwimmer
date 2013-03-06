@@ -51,6 +51,10 @@ public class Operators {
         return mDriver.getLeftBumper();
     }
 
+    public double getIntakeAdjustment() {
+        return mDriver.getYRight();
+    }
+    
     public boolean isHangerUpButton() {
         return mDriver.getYButton();
     }
@@ -90,4 +94,5 @@ public class Operators {
     public boolean isShiftDown() {
         return mDriver.getTriggerDifference() < -0.5;
     }
+
 }

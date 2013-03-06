@@ -39,4 +39,8 @@ public class LinearPIDFF {
     public boolean isDone() {
         return mPID.isDone();
     }
+    
+    public double getCurError() {
+        return mPID.getCurError();
+    }
 }
