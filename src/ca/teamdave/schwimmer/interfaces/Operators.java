@@ -75,8 +75,11 @@ public class Operators {
     }
     
     // punch in/out
-    public boolean isPunchButtonDown() {
+    public boolean isForcePunchButtonDown() {
         return mOperator.getRawButton(6);
+    }
+    public boolean isAutoPunchButtonDown() {
+        return mOperator.getRawButton(2);
     }
             
     
@@ -94,5 +97,7 @@ public class Operators {
     public boolean isShiftDown() {
         return mDriver.getTriggerDifference() < -0.5;
     }
+
+   
 
 }

@@ -6,6 +6,7 @@ package ca.teamdave.schwimmer;
 
 import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.control.controlunits.BaseLock;
+import ca.teamdave.schwimmer.control.controlunits.PunchControl;
 import ca.teamdave.schwimmer.control.controlunits.ShotControl;
 import ca.teamdave.schwimmer.interfaces.Feeder;
 import ca.teamdave.schwimmer.interfaces.Hopper;
@@ -21,11 +22,13 @@ public class TeleopController {
     private final BaseLock mBaseLock;
     private boolean mBaseLockEngaged;
     private final ShotControl mShooter;
+    private final PunchControl mPunchControl;
     
     
     public TeleopController() {
         mBaseLock = new BaseLock();
         mShooter = new ShotControl();
+        mPunchControl = new PunchControl(mShooter);
         mBaseLockEngaged = false;
     }
     
@@ -60,9 +63,8 @@ public class TeleopController {
                 mShooter.disengage();
             }
         }
-        Hopper hop = robot.getHopper();
-        mShooter.doCycle(shot, robot.getHopper(), op.isPunchButtonDown());
-        
+
+        mShooter.doCycle(shot);
         // Shooter raiser
         if (op.isShooterHighButtonDown()) {
             shot.setRaiser(true);
@@ -70,14 +72,22 @@ public class TeleopController {
             shot.setRaiser(false);
         }
 
+        Hopper hop = robot.getHopper();
         // hopper raiser
         if (op.isHopperHighButtonDown()) {
             hop.setRaiser(true);
         } else if (op.isHopperLowButtonDown()) {
             hop.setRaiser(false);
         }
+        
         // hopper punch
-        // hop.setPunch(op.isPunchButtonDown());
+        if (op.isForcePunchButtonDown()) {
+            mPunchControl.setStateManual(true);
+        } else if (op.isAutoPunchButtonDown()){
+            mPunchControl.setStateAutoContinuous();
+        } else {
+            mPunchControl.setStateManual(false);
+        }
         
         // Feeder
         if (op.isIntakeButtonDown()) {
