@@ -11,8 +11,8 @@ import ca.teamdave.schwimmer.command.drive.TurnToHeading;
 import ca.teamdave.schwimmer.command.meta.Latch;
 import ca.teamdave.schwimmer.command.meta.NoOp;
 import ca.teamdave.schwimmer.command.meta.Series;
-import ca.teamdave.schwimmer.command.shooter.DummyShootDisk;
-import ca.teamdave.schwimmer.command.shooter.DummyWaitForFlyWheel;
+import ca.teamdave.schwimmer.command.shooter.dummy.DummyShootDisk;
+import ca.teamdave.schwimmer.command.shooter.dummy.DummyWaitForFlyWheel;
 import ca.teamdave.schwimmer.util.Const;
 import ca.teamdave.schwimmer.util.DaveVector;
 

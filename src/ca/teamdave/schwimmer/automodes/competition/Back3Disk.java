@@ -6,7 +6,10 @@ package ca.teamdave.schwimmer.automodes.competition;
 
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
+import ca.teamdave.schwimmer.command.meta.Series;
 import ca.teamdave.schwimmer.command.shooter.ShootDisks;
+import ca.teamdave.schwimmer.command.shooter.ShooterHeight;
+
 
 /**
  *
@@ -14,8 +17,15 @@ import ca.teamdave.schwimmer.command.shooter.ShootDisks;
  */
 public class Back3Disk extends AutoModeDescriptor {
 
+    public static Command getAsCommand() {
+        return new Series(new Command[] {
+            new ShooterHeight(false),
+            new ShootDisks(3)
+        });
+    }
+    
     public Command getTopLevelCommand() {
-        return new ShootDisks(3);
+        return getAsCommand();
     }
 
     public String getVisibleName() {
