@@ -83,7 +83,7 @@ public class Back5Disk extends AutoModeDescriptor {
     }
 
     public String getVisibleName() {
-        return "Back 5 Disk";
+        return "Back 5 Stop";
     }
     
 }

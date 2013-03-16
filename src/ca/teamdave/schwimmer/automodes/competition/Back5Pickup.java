@@ -27,7 +27,7 @@ import ca.teamdave.schwimmer.util.DaveVector;
  *
  * @author leighpauls
  */
-public class Back7Disk extends AutoModeDescriptor {
+public class Back5Pickup extends AutoModeDescriptor {
 
     public Command getTopLevelCommand() {
         Const c = Const.getInstance();
@@ -50,29 +50,27 @@ public class Back7Disk extends AutoModeDescriptor {
 
             // finish picking up
             new DriveStop(),
-            new Delay(2.0),
+            new Delay(0.5),
             
             // get ready to shoot
             new Latch(new Command[] {
                 new PickupSpit(),
-                new HopperHeight(true),
                 new DriveToPositionReverse(shootPos, power),
             }),
             
             // aim
-            new TurnToHeading(0.0),
+            new Latch(new Command[] {
+                new TurnToHeading(0.0),
+                new HopperHeight(true),
+            }),
+            
             new DriveStop(),
             new PickupStop(),
-            
-            // fire
-            new ShootDisks(2),
-            new Delay(1.0),
-            new ShooterStop()
         });
     }
 
     public String getVisibleName() {
-        return "Back 7 Disk";
+        return "Back 5 Pickup";
     }
     
 }
