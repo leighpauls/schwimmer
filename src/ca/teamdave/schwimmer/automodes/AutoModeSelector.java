@@ -5,7 +5,9 @@
 package ca.teamdave.schwimmer.automodes;
 
 import ca.teamdave.schwimmer.automodes.competition.Back3Disk;
+import ca.teamdave.schwimmer.automodes.competition.Back3Drive;
 import ca.teamdave.schwimmer.automodes.competition.Back5Disk;
+import ca.teamdave.schwimmer.automodes.competition.Back5Drive;
 import ca.teamdave.schwimmer.automodes.competition.Back5Pickup;
 import ca.teamdave.schwimmer.automodes.dummy.Dummy7Disk;
 import ca.teamdave.schwimmer.automodes.dummy.ArcMode;
@@ -27,8 +29,11 @@ public class AutoModeSelector {
     public AutoModeSelector() {
         mModeList = new AutoModeDescriptor[] {
             new Back3Disk(),
+            new Back3Drive(),
             new Back5Disk(),
             new Back5Pickup(),
+            new Back5Drive(true),
+            new Back5Drive(false),
             new AutoModeDescriptor() {
                 // Nothing command for safety
                 public Command getTopLevelCommand() {
@@ -42,7 +47,7 @@ public class AutoModeSelector {
     }
     
     public AutoModeDescriptor getDefault() {
-        return mModeList[2];
+        return mModeList[3];
     }
     
     public AutoModeDescriptor selectFromAnalogRange(double analogInput) {

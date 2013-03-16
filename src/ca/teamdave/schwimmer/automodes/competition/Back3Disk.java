@@ -33,7 +33,7 @@ public class Back3Disk extends AutoModeDescriptor {
     }
 
     public String getVisibleName() {
-        return "Back 3 Stop";
+        return "3 Stop";
     }
     
 }

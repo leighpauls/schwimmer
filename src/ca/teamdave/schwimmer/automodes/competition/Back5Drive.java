@@ -19,6 +19,7 @@ import ca.teamdave.schwimmer.command.pickup.PickupIntake;
 import ca.teamdave.schwimmer.command.pickup.PickupSpit;
 import ca.teamdave.schwimmer.command.pickup.PickupStop;
 import ca.teamdave.schwimmer.command.shooter.ShootDisks;
+import ca.teamdave.schwimmer.command.shooter.ShooterHeight;
 import ca.teamdave.schwimmer.command.shooter.ShooterStop;
 import ca.teamdave.schwimmer.util.Const;
 import ca.teamdave.schwimmer.util.DaveVector;
@@ -27,50 +28,48 @@ import ca.teamdave.schwimmer.util.DaveVector;
  *
  * @author leighpauls
  */
-public class Back5Pickup extends AutoModeDescriptor {
+public class Back5Drive extends AutoModeDescriptor {
+    private final boolean mIsLeft;
 
+    public Back5Drive(boolean isLeft) {
+        mIsLeft = isLeft;
+    }
+    
     public Command getTopLevelCommand() {
         Const c = Const.getInstance();
         
-        DaveVector pickupPos1 = c.vectorFromConst("7_disk_pick_1", -0.6, 3.6);
-        DaveVector pickupPos2 = c.vectorFromConst("7_disk_pick_2", -0.3, 4.0);
-        DaveVector shootPos = c.vectorFromConst("7_disk_shoot", -0.4, 2.0);
-        double power = c.getDouble("7_disk_drive_power", 0.3);
+        DaveVector safePosition = c.vectorFromConst("5_disk_drive_safe", -0.3, -1);
+
+        double power = c.getDouble("5_disk_drive_drive_power", 0.4);
+        double endAngle = c.getDouble("5_disk_drive_end_angle", 45);
+
+        DaveVector endPosition;
+        
+        if (mIsLeft) {
+            endPosition = c.vectorFromConst("5_disk_dive_left", -3.0, -3.0);
+            endAngle *= -1;
+        } else {
+            endPosition = c.vectorFromConst("5_disk_dive_right", 1.0, -3.0);
+        }
         
         return new Series(new Command[] {
             Back5Disk.getAsCommand(),
             
-            // lower the hopper
+            // lower the hopper+shooter
             new HopperHeight(false),
+            new ShooterHeight(false),
             
-            // pickup and drive
-            new PickupIntake(),
-            new DriveToPosition(pickupPos1, power),
-            new DriveToPosition(pickupPos2, power),
-
-            // finish picking up
-            new DriveStop(),
-            new Delay(0.5),
-            
-            // get ready to shoot
-            new Latch(new Command[] {
-                new PickupSpit(),
-                new DriveToPositionReverse(shootPos, power),
-            }),
-            
-            // aim
-            new Latch(new Command[] {
-                new TurnToHeading(0.0),
-                new HopperHeight(true),
-            }),
-            
-            new DriveStop(),
-            new PickupStop(),
+            // Drive to a safe position
+            new DriveToPositionReverse(safePosition, power),
+            // Drive to the end position
+            new DriveToPositionReverse(endPosition, power),
+            new TurnToHeading(endAngle),
+            new DriveStop()
         });
     }
 
     public String getVisibleName() {
-        return "5 Pickup";
+        return "5 Drive " + (mIsLeft ? "Left" : "Right");
     }
     
 }
