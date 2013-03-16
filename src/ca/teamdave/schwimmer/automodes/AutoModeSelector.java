@@ -5,6 +5,7 @@
 package ca.teamdave.schwimmer.automodes;
 
 import ca.teamdave.schwimmer.automodes.competition.Back3Disk;
+import ca.teamdave.schwimmer.automodes.competition.Back5Disk;
 import ca.teamdave.schwimmer.automodes.dummy.Dummy7Disk;
 import ca.teamdave.schwimmer.automodes.dummy.ArcMode;
 import ca.teamdave.schwimmer.automodes.test.TestArc;
@@ -25,6 +26,7 @@ public class AutoModeSelector {
     public AutoModeSelector() {
         mModeList = new AutoModeDescriptor[] {
             new Back3Disk(),
+            new Back5Disk(),
             new TestDriveLine(),
             new TestTurn(),
             new TestDriveToPos(),
@@ -41,7 +43,7 @@ public class AutoModeSelector {
     }
     
     public AutoModeDescriptor getDefault() {
-        return mModeList[3];
+        return mModeList[1];
     }
     
     public AutoModeDescriptor selectFromAnalogRange(double analogInput) {

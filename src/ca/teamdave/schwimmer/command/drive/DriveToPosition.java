@@ -10,6 +10,7 @@ import ca.teamdave.schwimmer.control.controlunits.TurnController;
 import ca.teamdave.schwimmer.interfaces.Drive;
 import ca.teamdave.schwimmer.interfaces.Robot;
 import ca.teamdave.schwimmer.util.Const;
+import ca.teamdave.schwimmer.util.DaveUtil;
 import ca.teamdave.schwimmer.util.DaveVector;
 
 /**
@@ -39,10 +40,10 @@ public class DriveToPosition implements Command {
         DaveVector meToDest = curPos.vectorTo(mDest);
         
         // robot will go backwards if that's a faster path!!!
-        double forwardPowerMultiplier = mMaxPower * Math.cos(
+        double forwardPowerMultiplier = Math.cos(
                 Math.toRadians(meToDest.getFieldAngle() - curHeading));
         double forwardPower = forwardPowerMultiplier 
-                * mForwardControl.computeCycle(-meToDest.getMagnitude());
+                * DaveUtil.limit(mForwardControl.computeCycle(-meToDest.getMagnitude()), mMaxPower);
         
         mTurnControl.setDestAngle(meToDest.getFieldAngle());
         mTurnControl.setForwardPower(forwardPower);
