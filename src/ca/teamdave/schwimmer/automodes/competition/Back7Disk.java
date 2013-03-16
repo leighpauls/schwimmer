@@ -6,15 +6,20 @@ package ca.teamdave.schwimmer.automodes.competition;
 
 import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
+import ca.teamdave.schwimmer.command.drive.DriveStop;
+import ca.teamdave.schwimmer.command.drive.DriveToPosition;
+import ca.teamdave.schwimmer.command.drive.DriveToPositionReverse;
 import ca.teamdave.schwimmer.command.drive.FollowLine;
 import ca.teamdave.schwimmer.command.drive.TurnToHeading;
 import ca.teamdave.schwimmer.command.hopper.HopperHeight;
+import ca.teamdave.schwimmer.command.meta.Delay;
 import ca.teamdave.schwimmer.command.meta.Latch;
 import ca.teamdave.schwimmer.command.meta.Series;
 import ca.teamdave.schwimmer.command.pickup.PickupIntake;
 import ca.teamdave.schwimmer.command.pickup.PickupSpit;
 import ca.teamdave.schwimmer.command.pickup.PickupStop;
 import ca.teamdave.schwimmer.command.shooter.ShootDisks;
+import ca.teamdave.schwimmer.command.shooter.ShooterStop;
 import ca.teamdave.schwimmer.util.Const;
 import ca.teamdave.schwimmer.util.DaveVector;
 
@@ -26,52 +31,43 @@ public class Back7Disk extends AutoModeDescriptor {
 
     public Command getTopLevelCommand() {
         Const c = Const.getInstance();
-        double driveAngle = c.getDouble(
-                "7_disk_drive_angle", -25);
-        double driveDistance = c.getDouble(
-                "7_disk_drive_dist", 1.5);
-        double drivePower = c.getDouble(
-                "7_disk_drive_power", 0.5);
-
-        // TODO: I shouldn't be double-looking up a variable by string here
-        DaveVector startPosition = DaveVector.fromFieldRadial(
-                c.getDouble("5_disk_drive_dist", 1.5),
-                c.getDouble("5_disk_drive_angle", 25.0));
+        
+        DaveVector pickupPos1 = c.vectorFromConst("7_disk_pick_1", -0.6, 3.6);
+        DaveVector pickupPos2 = c.vectorFromConst("7_disk_pick_2", -0.3, 4.0);
+        DaveVector shootPos = c.vectorFromConst("7_disk_shoot", -0.4, 2.0);
+        double power = c.getDouble("7_disk_drive_power", 0.3);
         
         return new Series(new Command[] {
             Back5Disk.getAsCommand(),
             
-            // turn to disks and lower hopper
-            new Latch(new Command[] {
-                new TurnToHeading(driveAngle),
-                new HopperHeight(false)
-            }),
+            // lower the hopper
+            new HopperHeight(false),
             
-            // drive forward and pick up
-            new Latch(new Command[] {
-                new PickupIntake(),
-                // TODO: replace this with DriveToPosition
-                new FollowLine(
-                startPosition, 
-                DaveVector.fromFieldRadial(1, driveAngle), 
-                driveDistance, 
-                drivePower)
-            }),
-                
-            // spit and drive back
+            // pickup and drive
+            new PickupIntake(),
+            new DriveToPosition(pickupPos1, power),
+            new DriveToPosition(pickupPos2, power),
+
+            // finish picking up
+            new DriveStop(),
+            new Delay(2.0),
+            
+            // get ready to shoot
             new Latch(new Command[] {
                 new PickupSpit(),
-                new TurnToHeading(0)
-            }),
-            // TODO: drive back to pyramid
-            // raise the hopper
-            new Latch(new Command[] {
-                // TODO: spin up shooter wheels
                 new HopperHeight(true),
-                new PickupStop()
+                new DriveToPositionReverse(shootPos, power),
             }),
+            
+            // aim
+            new TurnToHeading(0.0),
+            new DriveStop(),
+            new PickupStop(),
+            
             // fire
-            new ShootDisks(2)
+            new ShootDisks(2),
+            new Delay(1.0),
+            new ShooterStop()
         });
     }
 

@@ -15,7 +15,7 @@ public class Delay implements Command {
     private int mCycles;
 
     public Delay(double seconds) {
-        mCycles = (int)(seconds * 50);
+        mCycles = (int)(seconds * 50.0);
     }
     
     public void runCommandStep(Robot robot) {

@@ -4,6 +4,7 @@
  */
 package ca.teamdave.schwimmer.interfaces;
 
+import ca.teamdave.schwimmer.util.DaveUtil;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -65,8 +66,8 @@ public class Shooter {
     }
     
     public void setPower(double front, double back, boolean engaged) {
-        mFrontMotor.set(-front);
-        mBackMotor.set(-back);
+        mFrontMotor.set(DaveUtil.limit(-front, 1.0));
+        mBackMotor.set(DaveUtil.limit(-back, 1.0));
         
         if (engaged) {
             mCompressor.stop();

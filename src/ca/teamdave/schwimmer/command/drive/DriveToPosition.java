@@ -28,7 +28,7 @@ public class DriveToPosition implements Command {
         mDest = position;
         mTurnControl = new TurnController();
         mForwardControl = Const.getInstance().pwdFromConst(
-                "position_drive", 0.7, 0.0, 0.0, 10.0);
+                "position_drive", 0.7, 0.0, 0.0, 0.1);
         mMaxPower = maxPower;
         mDone = false;
     }

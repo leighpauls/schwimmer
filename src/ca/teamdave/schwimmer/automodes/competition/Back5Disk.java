@@ -8,7 +8,6 @@ import ca.teamdave.schwimmer.automodes.AutoModeDescriptor;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.command.drive.DriveStop;
 import ca.teamdave.schwimmer.command.drive.DriveToPosition;
-import ca.teamdave.schwimmer.command.drive.FollowLine;
 import ca.teamdave.schwimmer.command.drive.TurnToHeading;
 import ca.teamdave.schwimmer.command.hopper.HopperHeight;
 import ca.teamdave.schwimmer.command.meta.Delay;
