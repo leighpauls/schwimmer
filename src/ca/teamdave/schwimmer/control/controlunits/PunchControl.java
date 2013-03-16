@@ -42,8 +42,7 @@ public class PunchControl {
     }
     
     public void setStateAutoCount(int numDisks) {
-        mAutoPunchEngaged = true;
-        
+        mManualOut = false;
         if (numDisks >= 0) {
             mDisksToShoot = numDisks;
             mExitOnDiskCount = true;
@@ -51,7 +50,11 @@ public class PunchControl {
             mExitOnDiskCount = false;
         }
 
-        mAutoState = STATE_WAIT_FOR_SPEED;
+        if (!mAutoPunchEngaged) {
+            mAutoState = STATE_WAIT_FOR_SPEED;
+            mAutoPunchEngaged = true;
+        }
+                
     }
     
     public void setStateManual(boolean punchOut) {

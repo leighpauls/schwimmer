@@ -4,11 +4,13 @@
  */
 package ca.teamdave.schwimmer.automodes;
 
+import ca.teamdave.schwimmer.automodes.competition.Back3Disk;
 import ca.teamdave.schwimmer.automodes.dummy.Dummy7Disk;
 import ca.teamdave.schwimmer.automodes.dummy.ArcMode;
 import ca.teamdave.schwimmer.automodes.test.TestArc;
 import ca.teamdave.schwimmer.automodes.test.TestDriveLine;
 import ca.teamdave.schwimmer.automodes.test.TestDriveToEncoder;
+import ca.teamdave.schwimmer.automodes.test.TestDriveToPos;
 import ca.teamdave.schwimmer.automodes.test.TestTurn;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.command.meta.Endless;
@@ -22,12 +24,10 @@ public class AutoModeSelector {
 
     public AutoModeSelector() {
         mModeList = new AutoModeDescriptor[] {
-            new Dummy7Disk(),
+            new Back3Disk(),
             new TestDriveLine(),
             new TestTurn(),
-            new TestDriveToEncoder(),
-            new TestArc(),
-            new ArcMode(),
+            new TestDriveToPos(),
             new AutoModeDescriptor() {
                 // Nothing command for safety
                 public Command getTopLevelCommand() {
@@ -41,7 +41,7 @@ public class AutoModeSelector {
     }
     
     public AutoModeDescriptor getDefault() {
-        return mModeList[5];
+        return mModeList[3];
     }
     
     public AutoModeDescriptor selectFromAnalogRange(double analogInput) {

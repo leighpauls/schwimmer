@@ -84,10 +84,12 @@ public class TeleopController {
         if (op.isForcePunchButtonDown()) {
             mPunchControl.setStateManual(true);
         } else if (op.isAutoPunchButtonDown()){
+            System.out.println("Autopunching");
             mPunchControl.setStateAutoContinuous();
         } else {
             mPunchControl.setStateManual(false);
         }
+        mPunchControl.doCycle(hop);
         
         // Feeder
         if (op.isIntakeButtonDown()) {

@@ -45,6 +45,7 @@ public class Back5Disk extends AutoModeDescriptor {
             // drive forward and pick up
             new Latch(new Command[] {
                 new PickupIntake(),
+                // TODO: replace this with DriveToPosition
                 new FollowLine(
                 DaveVector.fromXY(0, 0),
                 DaveVector.fromFieldRadial(1, driveAngle),

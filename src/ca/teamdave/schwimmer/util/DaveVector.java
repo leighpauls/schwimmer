@@ -90,4 +90,8 @@ public class DaveVector {
     public String toString() {
         return "Vector X: " + mX + ", Y: " + mY;
     }
+
+    public void println(String label) {
+        System.out.println(label + toString());
+    }
 }
