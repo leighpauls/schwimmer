@@ -32,14 +32,14 @@ public class Back5Disk extends AutoModeDescriptor {
         double turnAngle = Const.getInstance().getDouble(
                 "5_disk_turn_angle", 40);
         double driveAngle = Const.getInstance().getDouble(
-                "5_disk_drive_angle", 30.0);
+                "5_disk_drive_angle", 25.0);
         double driveDistance = Const.getInstance().getDouble(
-                "5_disk_drive_dist", 1.5);
+                "5_disk_drive_dist", 2.4);
         double drivePower = Const.getInstance().getDouble(
-                "5_disk_drive_power", 0.5);
+                "5_disk_drive_power", 0.3);
         
         double closeShotAngle = Const.getInstance().getDouble(
-                "5_disk_close_angle", -10);
+                "5_disk_close_angle", -5);
         
         return new Series(new Command[] {
             Back3Disk.getAsCommand(),
