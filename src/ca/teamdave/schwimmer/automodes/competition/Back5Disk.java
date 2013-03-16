@@ -19,6 +19,7 @@ import ca.teamdave.schwimmer.command.pickup.PickupSpit;
 import ca.teamdave.schwimmer.command.pickup.PickupStop;
 import ca.teamdave.schwimmer.command.shooter.ShootDisks;
 import ca.teamdave.schwimmer.command.shooter.ShooterHeight;
+import ca.teamdave.schwimmer.command.shooter.ShooterStop;
 import ca.teamdave.schwimmer.util.Const;
 import ca.teamdave.schwimmer.util.DaveVector;
 
@@ -29,41 +30,29 @@ import ca.teamdave.schwimmer.util.DaveVector;
 public class Back5Disk extends AutoModeDescriptor {
 
     public static Command getAsCommand() {
-        double turnAngle = Const.getInstance().getDouble(
-                "5_disk_turn_angle", 40);
-        double driveAngle = Const.getInstance().getDouble(
-                "5_disk_drive_angle", 25.0);
-        double driveDistance = Const.getInstance().getDouble(
-                "5_disk_drive_dist", 2.4);
-        double drivePower = Const.getInstance().getDouble(
-                "5_disk_drive_power", 0.3);
+        Const c = Const.getInstance();
+        DaveVector drive_pos_1 = c.vectorFromConst("5_disk_1", -0.3, 0.7);
+        DaveVector drive_pos_2 = c.vectorFromConst("5_disk_2", -0.7, 1.0);
+        DaveVector drive_pos_3 = c.vectorFromConst("5_disk_3", -0.9, 2.0);
         
-        double closeShotAngle = Const.getInstance().getDouble(
-                "5_disk_close_angle", -5);
+        double power = c.getDouble("5_disk_drive_power", 0.3);
+        double closeShotAngle = c.getDouble("5_disk_close_angle", -5.0);
         
         return new Series(new Command[] {
             Back3Disk.getAsCommand(),
     
-            // turn to disks and lower hopper
-            new Latch(new Command[] {
-                new TurnToHeading(turnAngle),
-                new HopperHeight(false),
-            }),
-            
-            new TurnToHeading(driveAngle),
-            
+            // lower hopper
+            new HopperHeight(false),
+            new PickupIntake(),
             // drive forward and pick up
-            new Latch(new Command[] {
-                new PickupIntake(),
-                // TODO: replace this with DriveToPosition
-                new DriveToPosition(
-                DaveVector.fromFieldRadial(driveDistance, driveAngle),
-                drivePower
-                )
-            }),
+
+            new DriveToPosition(drive_pos_1, power),
+            new DriveToPosition(drive_pos_2, power),
+            new DriveToPosition(drive_pos_3, power),
             
             new DriveStop(),
-            new Delay(1.0),
+            // finish picking up
+            new Delay(0.5),
             
             // raise the shooter, aim, and spit any caught disks
             new Latch(new Command[] {
@@ -72,6 +61,7 @@ public class Back5Disk extends AutoModeDescriptor {
                 new ShooterHeight(true)
             }),
             
+            // Make sure there isn't any stateful drive power 
             new DriveStop(),
             
             // raise the hopper
@@ -82,7 +72,10 @@ public class Back5Disk extends AutoModeDescriptor {
             }),
             
             // fire
-            new ShootDisks(2)
+            new ShootDisks(2),
+            new Delay(0.5),
+            new ShooterStop()
+            
         });
     }
 
