@@ -42,11 +42,11 @@ public class Feeder {
         }
         if (state == STATE_IN) {
             // mIntakeMotor.set(-0.63 - powerAdjustment);
-            mIntakeMotor.set(-1.0 - powerAdjustment);
+            mIntakeMotor.set(1.0 + powerAdjustment);
             mRaiserDown.set(true);
             mRaiserUp.set(false);
         } else if (state == STATE_SPIT) {
-            mIntakeMotor.set(1.0);
+            mIntakeMotor.set(-1.0);
             mRaiserDown.set(true);
             mRaiserUp.set(false);
         } else {

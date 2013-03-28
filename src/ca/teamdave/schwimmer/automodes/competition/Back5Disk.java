@@ -51,7 +51,7 @@ public class Back5Disk extends AutoModeDescriptor {
             
             new DriveStop(),
             // finish picking up
-            new Delay(0.5),
+            new Delay(1.0),
             
             // raise the shooter, aim, and spit any caught disks
             new Latch(new Command[] {

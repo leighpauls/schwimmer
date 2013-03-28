@@ -9,13 +9,8 @@ import ca.teamdave.schwimmer.automodes.competition.Back3Drive;
 import ca.teamdave.schwimmer.automodes.competition.Back5Disk;
 import ca.teamdave.schwimmer.automodes.competition.Back5Drive;
 import ca.teamdave.schwimmer.automodes.competition.Back5Pickup;
-import ca.teamdave.schwimmer.automodes.dummy.Dummy7Disk;
-import ca.teamdave.schwimmer.automodes.dummy.ArcMode;
-import ca.teamdave.schwimmer.automodes.test.TestArc;
-import ca.teamdave.schwimmer.automodes.test.TestDriveLine;
-import ca.teamdave.schwimmer.automodes.test.TestDriveToEncoder;
-import ca.teamdave.schwimmer.automodes.test.TestDriveToPos;
-import ca.teamdave.schwimmer.automodes.test.TestTurn;
+import ca.teamdave.schwimmer.automodes.competition.Front2Disk;
+import ca.teamdave.schwimmer.automodes.dummy.DummyShooterTest;
 import ca.teamdave.schwimmer.command.Command;
 import ca.teamdave.schwimmer.command.meta.Endless;
 
@@ -28,6 +23,8 @@ public class AutoModeSelector {
 
     public AutoModeSelector() {
         mModeList = new AutoModeDescriptor[] {
+            new DummyShooterTest(),
+            new Front2Disk(),
             new Back3Disk(),
             new Back3Drive(),
             new Back5Disk(),
